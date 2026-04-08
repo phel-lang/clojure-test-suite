@@ -1,6 +1,7 @@
 (ns clojure.core-test.portability
   #?(:lpy (:import time))
   (:require #?(:cljs [cljs.test :as t]
+               :phel [phel.test :as t]
                :default [clojure.test :as t])))
 
 (defmacro when-var-exists [var-sym & body]
@@ -18,6 +19,7 @@
   ;; return true if the fractional part of the double is zero
   #?(:cljs (integer? n)
      :lpy (integer? n)
+     :phel (integer? n)
      :default
      (and (integer? n)
           (not (int? n)))))
@@ -26,7 +28,8 @@
   (#?(:cljr System.Threading.Thread/Sleep
       :cljs #(js/setTimeout identity %)
       :clj Thread/sleep
-      :lpy time/sleep)
+      :lpy time/sleep
+      :phel #(php/usleep (* 1000 %)))
    ms))
 
 ;; --- Portable exception multimethod. ---
