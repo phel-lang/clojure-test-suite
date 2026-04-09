@@ -109,6 +109,20 @@ bb test-lpy
 deactivate
 ```
 
+## Running the Phel tests (WIP)
+
+### Pre-requisities
+- PHP 8.3+ / Composer
+
+### Running tests
+
+This doesn't quite run the test yet but tests the initial project scaffolding.
+
+```bash
+composer install
+./vendor/phel-lang/phel-lang/bin/phel run test/clojure/core_test/portability.cljc
+```
+
 ## Babashka Tasks
 
 You can see which Babashka tasks are available with:
