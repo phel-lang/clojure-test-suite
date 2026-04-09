@@ -1,3 +1,40 @@
+# Phel experimentation for clojure-test-suite
+
+Most tests are removed from the upstream repo and are added back later as things are confirmed working.
+Files may have Phel specific edits that eventually would be submitted to upstream.
+
+### Pre-requisities
+
+Requires PHP 8.3+ and Composer.
+
+Install Phel:
+```
+composer install
+```
+
+### Running tests with Phel
+
+Run single test:
+```bash
+./vendor/phel-lang/phel-lang/bin/phel test test/clojure/core_test/comment.cljc
+```
+
+Run all:
+```
+./vendor/phel-lang/phel-lang/bin/phel test
+```
+
+### Testing that portability.cljc loads (OK)
+
+Checks that the project scaffolding is working.
+
+```bash
+./vendor/phel-lang/phel-lang/bin/phel run test/clojure/core_test/portability.cljc
+```
+
+
+**Original readme continues:**
+
 # The clojure.core test suite
 This is a set of tests for Clojure's core standard library. Its purpose is not
 only to draw clear boundaries around Clojure JVM's behavior, but also to serve
@@ -109,19 +146,6 @@ bb test-lpy
 deactivate
 ```
 
-## Running the Phel tests (WIP)
-
-### Pre-requisities
-- PHP 8.3+ / Composer
-
-### Running tests
-
-This doesn't quite run the test yet but tests the initial project scaffolding.
-
-```bash
-composer install
-./vendor/phel-lang/phel-lang/bin/phel run test/clojure/core_test/portability.cljc
-```
 
 ## Babashka Tasks
 
