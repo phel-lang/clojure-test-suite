@@ -33,7 +33,6 @@
         (is (= nil (and nil nil 3)))
         (is (= nil (and nil nil nil nil nil nil nil nil nil nil nil nil true)))))
 
-   ;; (testing "infinite-sequence"
-   ;;   (is (some?
-   ;;        (and (range)))))
-    ))
+   (testing "infinite-sequence"
+     (is (some?
+          (and (range)))))))
