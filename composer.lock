@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da1752d817844c83e9246e06c38334cc",
+    "content-hash": "3b3f5f59607a6dc798f8bf248dae5c07",
     "packages": [
         {
             "name": "gacela-project/container",
@@ -164,12 +164,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phel-lang/phel-lang.git",
-                "reference": "b6330d4"
+                "reference": "eaab0c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/b6330d4",
-                "reference": "b6330d4",
+                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/eaab0c8",
+                "reference": "eaab0c8",
                 "shasum": ""
             },
             "require": {
@@ -236,7 +236,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-10T12:18:30+00:00"
+            "time": "2026-04-10T13:45:40+00:00"
         },
         {
             "name": "phpunit/php-timer",
