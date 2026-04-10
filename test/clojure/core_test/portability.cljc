@@ -1,4 +1,4 @@
-(ns phel.core-test.portability
+(ns clojure.core-test.portability
   #?(:lpy (:import time))
   (:require #?(:cljs [cljs.test :as t]
                :phel [phel.test :as t]
