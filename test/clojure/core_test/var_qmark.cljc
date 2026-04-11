@@ -32,24 +32,26 @@
         ;;     :default [(defn qux [] nil)])
         )
 
-      ;;(when-var-exists defmulti  
+      ;;(when-var-exists defmulti
       ;; (is (var? #'bar))) ;; TODO Unterminated list (EOF)  defmulti literal not implemented?
-      
+
       ;; (when-var-exists defprotocol
-      ;;   (is (var? #'MyProtocol)))
+      ;;   (is (var? #'MyProtocol)))  ;; TODO Unterminated list (EOF)
+
       )
 
-    ;; (testing "var-adjacent things"
-    ;;   (are [not-a-var] (not (var? not-a-var))
-    ;;     foo
-    ;;     var?
-    ;;     i-am-dynamic
-    ;;     'foo
-    ;;     'var?
-    ;;     'i-am-dynamic
-    ;;     *assert*
-    ;;     #(+ 1 %)
-    ;;     (fn baz [x] x)))
+    (testing "var-adjacent things"
+      (are [not-a-var] (not (var? not-a-var))
+        foo
+        var?
+        i-am-dynamic
+        'foo
+        'var?
+        'i-am-dynamic
+        ; *assert*  ; TODO [PHEL001] Cannot resolve symbol '*assert*'
+        #(+ 1 %)
+        ; (fn baz [x] x)  ; TODO Second argument of 'fn must be a vector
+        ))
 
     ;; (testing "things which are clearly not vars"
     ;;   (are [v] (not (var? v))
