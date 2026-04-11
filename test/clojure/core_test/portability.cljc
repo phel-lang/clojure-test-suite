@@ -1,7 +1,6 @@
 (ns clojure.core-test.portability
   #?(:lpy (:import time))
   (:require #?(:cljs [cljs.test :as t]
-               :phel [phel.test :as t]
                :default [clojure.test :as t])))
 
 (defmacro when-var-exists [var-sym & body]
