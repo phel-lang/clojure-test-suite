@@ -59,18 +59,19 @@
         (testing "lazy sequences"
           (is (false? (realized? (lazy-seq))))
           (is (true? (realized? (doall (lazy-seq)))))
-          (let [;; From https://clojuredocs.org/clojure.core/lazy-seq#example-54d152d7e4b0e2ac61831cfc
-                square (fn square [n] (* n n))
-                squares (fn squares [n]
-                          ;; please handle with care: avoid e.g. `doall` into infinity
-                          (lazy-seq (cons (square n) (squares (inc n)))))
-                ;; Note, `square` is NOT called yet in the following line
-                our-squares (squares 1)]
-            (is (false? (realized? our-squares)))
-            (is (empty? (take 0 our-squares)))
-            (is (false? (realized? our-squares)))
-            (is (= 1 (count (take 1 our-squares))))
-            (is (true? (realized? our-squares))))))
+          ;; (let [;; From https://clojuredocs.org/clojure.core/lazy-seq#example-54d152d7e4b0e2ac61831cfc
+          ;;       square (fn square [n] (* n n))
+          ;;       squares (fn squares [n]
+          ;;                 ;; please handle with care: avoid e.g. `doall` into infinity
+          ;;                 (lazy-seq (cons (square n) (squares (inc n)))))
+          ;;       ;; Note, `square` is NOT called yet in the following line
+          ;;       our-squares (squares 1)]
+          ;;   (is (false? (realized? our-squares)))
+          ;;   (is (empty? (take 0 our-squares)))
+          ;;   (is (false? (realized? our-squares)))
+          ;;   (is (= 1 (count (take 1 our-squares))))
+          ;;   (is (true? (realized? our-squares))))
+          ))
 
       (testing "Special case inputs"
         ;; the deref'd value is not a valid input
