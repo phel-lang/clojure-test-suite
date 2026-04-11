@@ -48,7 +48,7 @@
         'foo
         'var?
         'i-am-dynamic
-        *assert*
+        ;; *assert* TODO https://github.com/phel-lang/phel-lang/issues/1315
         #(+ 1 %)
         (fn baz [x] x)
         ))
