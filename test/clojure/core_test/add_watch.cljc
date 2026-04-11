@@ -4,73 +4,73 @@
 
 (when-var-exists add-watch
   (deftest test-add-watch
-    ;; (testing "watch atom"
-    ;;   ;; checks atoms and interspersed multiple watches
-    ;;   (let [state (volatile! [])
-    ;;         tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
-    ;;         tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
-    ;;         err (fn [key ref old new]
-    ;;               (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
-    ;;         a (atom 0)
-    ;;         r (atom 10)
-    ;;         update! (fn []
-    ;;                   (let [do-update (fn [x]
-    ;;                                     (try
-    ;;                                       (swap! x inc)
-    ;;                                       (catch #?(:cljs :default
-    ;;                                                 :clj clojure.lang.ExceptionInfo
-    ;;                                                 :cljr clojure.lang.ExceptionInfo
-    ;;                                                 :lpy basilisp.lang.exception/ExceptionInfo) e
-    ;;                                         (let [data (ex-data e)]
-    ;;                                           (vswap! state conj data)))))]
-    ;;                     (do-update a)
-    ;;                     (do-update r)))
-    ;;         keyed (fn [k s] (filter #(= k (:key %)) s))]
+    (testing "watch atom"
+      ;; checks atoms and interspersed multiple watches
+      (let [state (volatile! [])
+            tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
+            tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
+            err (fn [key ref old new]
+                  (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
+            a (atom 0)
+            r (atom 10)
+            update! (fn []
+                      (let [do-update (fn [x]
+                                        (try
+                                          (swap! x inc)
+                                          (catch #?(:cljs :default
+                                                    :clj clojure.lang.ExceptionInfo
+                                                    :cljr clojure.lang.ExceptionInfo
+                                                    :lpy basilisp.lang.exception/ExceptionInfo) e
+                                            (let [data (ex-data e)]
+                                              (vswap! state conj data)))))]
+                        (do-update a)
+                        (do-update r)))
+            keyed (fn [k s] (filter #(= k (:key %)) s))]
 
-    ;;     ;; Validate that no watches have been added
-    ;;     (update!)
-    ;;     (is (empty? @state))
+        ;; Validate that no watches have been added
+        (update!)
+        (is (empty? @state))
 
-    ;;     ;; add a watch to the atoms
-    ;;     (is (= a (add-watch a :a tester1)))
-    ;;     (is (= r (add-watch r :r tester1)))
-    ;;     (update!)
+        ;; add a watch to the atoms
+        (is (= a (add-watch a :a tester1)))
+        (is (= r (add-watch r :r tester1)))
+        (update!)
 
-    ;;     ;; add a second watch to the atom - new key
-    ;;     (add-watch a :s tester2)
-    ;;     (add-watch r :s tester2)
-    ;;     (update!)
+        ;; add a second watch to the atom - new key
+        (add-watch a :s tester2)
+        (add-watch r :s tester2)
+        (update!)
 
-    ;;     ;; replace the first watch by reusing the keys
-    ;;     (add-watch a :a tester2)
-    ;;     (add-watch r :r tester2)
-    ;;     (update!)
+        ;; replace the first watch by reusing the keys
+        (add-watch a :a tester2)
+        (add-watch r :r tester2)
+        (update!)
 
-    ;;     ;; check progress
-    ;;     (let [checkdata [{:key :a :ref a :old 1 :new 2 :tester 1}
-    ;;                      {:key :r :ref r :old 11 :new 12 :tester 1}
+        ;; check progress
+        (let [checkdata [{:key :a :ref a :old 1 :new 2 :tester 1}
+                         {:key :r :ref r :old 11 :new 12 :tester 1}
 
-    ;;                      {:key :a :ref a :old 2 :new 3 :tester 1}
-    ;;                      {:key :r :ref r :old 12 :new 13 :tester 1}
-    ;;                      {:key :s :ref a :old 2 :new 3 :tester 2}
-    ;;                      {:key :s :ref r :old 12 :new 13 :tester 2}
+                         {:key :a :ref a :old 2 :new 3 :tester 1}
+                         {:key :r :ref r :old 12 :new 13 :tester 1}
+                         {:key :s :ref a :old 2 :new 3 :tester 2}
+                         {:key :s :ref r :old 12 :new 13 :tester 2}
 
-    ;;                      {:key :a :ref a :old 3 :new 4 :tester 2}
-    ;;                      {:key :r :ref r :old 13 :new 14 :tester 2}
-    ;;                      {:key :s :ref a :old 3 :new 4 :tester 2}
-    ;;                      {:key :s :ref r :old 13 :new 14 :tester 2}]]
-    ;;       (is (= (set (keyed :a checkdata)) (set (keyed :a @state))))
-    ;;       (is (= (set (keyed :r checkdata)) (set (keyed :r @state))))
-    ;;       (is (= (set (keyed :s checkdata)) (set (keyed :s @state))))
+                         {:key :a :ref a :old 3 :new 4 :tester 2}
+                         {:key :r :ref r :old 13 :new 14 :tester 2}
+                         {:key :s :ref a :old 3 :new 4 :tester 2}
+                         {:key :s :ref r :old 13 :new 14 :tester 2}]]
+          (is (= (set (keyed :a checkdata)) (set (keyed :a @state))))
+          (is (= (set (keyed :r checkdata)) (set (keyed :r @state))))
+          (is (= (set (keyed :s checkdata)) (set (keyed :s @state))))
 
-    ;;       ;; add error watch
-    ;;       (add-watch a :e err)
-    ;;       (add-watch r :e err)
-    ;;       (update!)
-    ;;       (is (contains? (set (keyed :e @state))
-    ;;                      {:key :e :ref a :old 4 :new 5 :tester :err}))
-    ;;       (is (contains? (set (keyed :e @state))
-    ;;                      {:key :e :ref r :old 14 :new 15 :tester :err})))))
+          ;; add error watch
+          (add-watch a :e err)
+          (add-watch r :e err)
+          (update!)
+          (is (contains? (set (keyed :e @state))
+                         {:key :e :ref a :old 4 :new 5 :tester :err}))
+          (is (contains? (set (keyed :e @state))
+                         {:key :e :ref r :old 14 :new 15 :tester :err})))))
 
     ;; #?@(:cljs []
     ;;     :default
