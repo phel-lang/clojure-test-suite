@@ -73,6 +73,7 @@
           (is (contains? (set (keyed :e @state))
                          {:key :e :ref r :old 14 :new 15 :tester :err})))))
 
+    ;; TODO Unterminated list (BRACKETS) Probably due to #' syntax
     ;; #?@(:cljs []
     ;;     :default
     ;;     [(def testvar-a 0)
@@ -92,7 +93,8 @@
     ;;                                            (catch #?(:cljs :default
     ;;                                                      :clj clojure.lang.ExceptionInfo
     ;;                                                      :cljr clojure.lang.ExceptionInfo
-    ;;                                                      :lpy basilisp.lang.exception/ExceptionInfo) e
+    ;;                                                      :lpy basilisp.lang.exception/ExceptionInfo
+    ;;                                                      :phel \phel\lang\ExInfoException) e
     ;;                                              (let [{:keys [old] :as data} (ex-data e)]
     ;;                                                (vswap! state conj data)))))]
     ;;                          (do-update #'testvar-a)
@@ -144,181 +146,183 @@
     ;;            (is (contains? (set (keyed :e @state))
     ;;                           {:key :e :ref #'testvar-b :old 14 :new 15 :tester :err})))))])
 
-    ;; #?(:cljs nil
-    ;;    :lpy nil
-    ;;    :default
-    ;;    (testing "watch ref"
-    ;;      (let [state (volatile! [])
-    ;;            tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
-    ;;            tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
-    ;;            err (fn [key ref old new]
-    ;;                  (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
-    ;;            r (ref 10)
-    ;;            update! (fn []
-    ;;                      (try
-    ;;                        (dosync (ref-set r (inc @r)))
-    ;;                        (catch #?(:cljs :default
-    ;;                                  :clj clojure.lang.ExceptionInfo
-    ;;                                  :cljr clojure.lang.ExceptionInfo) e
-    ;;                          (let [{:keys [_old] :as data} (ex-data e)]
-    ;;                            (vswap! state conj data)))))
-    ;;            keyed (fn [k s] (filter #(= k (:key %)) s))]
+    #?(:cljs nil
+       :lpy nil
+       :phel nil  ; TODO phel ref support?
+       :default
+       (testing "watch ref"
+         (let [state (volatile! [])
+               tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
+               tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
+               err (fn [key ref old new]
+                     (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
+               r (ref 10)
+               update! (fn []
+                         (try
+                           (dosync (ref-set r (inc @r)))
+                           (catch #?(:cljs :default
+                                     :clj clojure.lang.ExceptionInfo
+                                     :cljr clojure.lang.ExceptionInfo) e
+                             (let [{:keys [_old] :as data} (ex-data e)]
+                               (vswap! state conj data)))))
+               keyed (fn [k s] (filter #(= k (:key %)) s))]
 
-    ;;        ;; add a watch to the ref
-    ;;        (is (= r (add-watch r :r tester1)))
-    ;;        (update!)
+           ;; add a watch to the ref
+           (is (= r (add-watch r :r tester1)))
+           (update!)
 
-    ;;        ;; add a second watch to the ref
-    ;;        (add-watch r :s tester2)
-    ;;        (update!)
+           ;; add a second watch to the ref
+           (add-watch r :s tester2)
+           (update!)
 
-    ;;        ;; replace the first watch by reusing the key
-    ;;        (add-watch r :r tester2)
-    ;;        (update!)
+           ;; replace the first watch by reusing the key
+           (add-watch r :r tester2)
+           (update!)
 
-    ;;        ;; remove the first watch
-    ;;        (is (= r (remove-watch r :r)))
-    ;;        (update!)
+           ;; remove the first watch
+           (is (= r (remove-watch r :r)))
+           (update!)
 
-    ;;        ;; check progress
-    ;;        (let [checkdata [{:key :r :ref r :old 10 :new 11 :tester 1}
+           ;; check progress
+           (let [checkdata [{:key :r :ref r :old 10 :new 11 :tester 1}
 
-    ;;                         {:key :r :ref r :old 11 :new 12 :tester 1}
-    ;;                         {:key :s :ref r :old 11 :new 12 :tester 2}
+                            {:key :r :ref r :old 11 :new 12 :tester 1}
+                            {:key :s :ref r :old 11 :new 12 :tester 2}
 
-    ;;                         {:key :r :ref r :old 12 :new 13 :tester 2}
-    ;;                         {:key :s :ref r :old 12 :new 13 :tester 2}
+                            {:key :r :ref r :old 12 :new 13 :tester 2}
+                            {:key :s :ref r :old 12 :new 13 :tester 2}
 
-    ;;                         {:key :s :ref r :old 13 :new 14 :tester 2}]]
-    ;;          (is (= (keyed :r checkdata) (keyed :r @state)))
-    ;;          (vreset! state [])
+                            {:key :s :ref r :old 13 :new 14 :tester 2}]]
+             (is (= (keyed :r checkdata) (keyed :r @state)))
+             (vreset! state [])
 
-    ;;          ;; remove the second watch - should be no updates
-    ;;          (remove-watch r :s)
-    ;;          (update!)
-    ;;          (is (empty? @state))
+             ;; remove the second watch - should be no updates
+             (remove-watch r :s)
+             (update!)
+             (is (empty? @state))
 
-    ;;          ;; add the first again, and check if is still works
-    ;;          (add-watch r :r tester1)
-    ;;          (update!)
+             ;; add the first again, and check if is still works
+             (add-watch r :r tester1)
+             (update!)
 
-    ;;          (is (= [{:key :r :ref r :old 15 :new 16 :tester 1}] (keyed :r @state)))
+             (is (= [{:key :r :ref r :old 15 :new 16 :tester 1}] (keyed :r @state)))
 
-    ;;          ;; add error watch
-    ;;          (add-watch r :e err)
-    ;;          (update!)
+             ;; add error watch
+             (add-watch r :e err)
+             (update!)
 
-    ;;          ;; The final watch may or may not have gone to :r before the error
-    ;;          ;; so remove this if it is there
-    ;;          (is (= #{{:key :r :ref r :old 15 :new 16 :tester 1}}
-    ;;                 (disj (set (keyed :r @state))
-    ;;                       {:key :r :ref r :old 16 :new 17 :tester 1})))
-    ;;          (is (= [{:key :e :ref r :old 16 :new 17 :tester :err}]
-    ;;                 (keyed :e @state)))))))
+             ;; The final watch may or may not have gone to :r before the error
+             ;; so remove this if it is there
+             (is (= #{{:key :r :ref r :old 15 :new 16 :tester 1}}
+                    (disj (set (keyed :r @state))
+                          {:key :r :ref r :old 16 :new 17 :tester 1})))
+             (is (= [{:key :e :ref r :old 16 :new 17 :tester :err}]
+                    (keyed :e @state)))))))
 
-    ;; #?@(:cljs []
-    ;;     :lpy []
-    ;;     :default
-    ;;     [(testing "watch agent"
-    ;;        (let [state (volatile! [])
-    ;;              tester1 (fn [key _ref old new]
-    ;;                        (when (not= old new)
-    ;;                          (vswap! state conj {:key key :old old :new new :tester 1})))
-    ;;              tester2 (fn [key _ref old new]
-    ;;                        (when (not= old new)
-    ;;                          (vswap! state conj {:key key :old old :new new :tester 2})))
-    ;;              agent-end (promise)
-    ;;              err (fn [key _ref old new]
-    ;;                    (deliver agent-end :done)
-    ;;                    (throw (ex-info "test" {:key key :old old :new new :tester :err})))
-    ;;              g (agent 20)
-    ;;              update! (fn []
-    ;;                        (when-let [e (agent-error g)]
-    ;;                          (vswap! state conj (ex-data e))
-    ;;                          (restart-agent g :ready))
-    ;;                        (send g inc))
-    ;;              _keyed (fn [k s] (set (filter #(= k (:key %)) s)))]
+    #?@(:cljs []
+        :lpy []
+        :phel []
+        :default
+        [(testing "watch agent"
+           (let [state (volatile! [])
+                 tester1 (fn [key _ref old new]
+                           (when (not= old new)
+                             (vswap! state conj {:key key :old old :new new :tester 1})))
+                 tester2 (fn [key _ref old new]
+                           (when (not= old new)
+                             (vswap! state conj {:key key :old old :new new :tester 2})))
+                 agent-end (promise)
+                 err (fn [key _ref old new]
+                       (deliver agent-end :done)
+                       (throw (ex-info "test" {:key key :old old :new new :tester :err})))
+                 g (agent 20)
+                 update! (fn []
+                           (when-let [e (agent-error g)]
+                             (vswap! state conj (ex-data e))
+                             (restart-agent g :ready))
+                           (send g inc))
+                 _keyed (fn [k s] (set (filter #(= k (:key %)) s)))]
 
-    ;;          ;; add a watch to the agent
-    ;;          (is (= g (add-watch g :g tester1)))
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= [{:key :g :old 20 :new 21 :tester 1}]
-    ;;                 @state))
+             ;; add a watch to the agent
+             (is (= g (add-watch g :g tester1)))
+             (update!)
+             (await g)
+             (is (= [{:key :g :old 20 :new 21 :tester 1}]
+                    @state))
 
-    ;;          ;; add a second watch - new key
-    ;;          (add-watch g :s tester2)
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                   {:key :g :old 21 :new 22 :tester 1}
-    ;;                   {:key :s :old 21 :new 22 :tester 2}}
-    ;;                 (set @state)))
+             ;; add a second watch - new key
+             (add-watch g :s tester2)
+             (update!)
+             (await g)
+             (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                      {:key :g :old 21 :new 22 :tester 1}
+                      {:key :s :old 21 :new 22 :tester 2}}
+                    (set @state)))
 
-    ;;          ;; replace the first watch by reusing the key
-    ;;          (add-watch g :g tester2)
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                   {:key :g :old 21 :new 22 :tester 1}
-    ;;                   {:key :s :old 21 :new 22 :tester 2}
-    ;;                   {:key :g :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 22 :new 23 :tester 2}}
-    ;;                 (set @state)))
+             ;; replace the first watch by reusing the key
+             (add-watch g :g tester2)
+             (update!)
+             (await g)
+             (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                      {:key :g :old 21 :new 22 :tester 1}
+                      {:key :s :old 21 :new 22 :tester 2}
+                      {:key :g :old 22 :new 23 :tester 2}
+                      {:key :s :old 22 :new 23 :tester 2}}
+                    (set @state)))
 
-    ;;          ;; remove the first watch
-    ;;          (is (= g (remove-watch g :g)))
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                   {:key :g :old 21 :new 22 :tester 1}
-    ;;                   {:key :s :old 21 :new 22 :tester 2}
-    ;;                   {:key :g :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 23 :new 24 :tester 2}}
-    ;;                 (set @state)))
+             ;; remove the first watch
+             (is (= g (remove-watch g :g)))
+             (update!)
+             (await g)
+             (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                      {:key :g :old 21 :new 22 :tester 1}
+                      {:key :s :old 21 :new 22 :tester 2}
+                      {:key :g :old 22 :new 23 :tester 2}
+                      {:key :s :old 22 :new 23 :tester 2}
+                      {:key :s :old 23 :new 24 :tester 2}}
+                    (set @state)))
 
-    ;;          ;; remove the second watches - should be no updates
-    ;;          (remove-watch g :s)
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                   {:key :g :old 21 :new 22 :tester 1}
-    ;;                   {:key :s :old 21 :new 22 :tester 2}
-    ;;                   {:key :g :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 23 :new 24 :tester 2}}
-    ;;                 (set @state)))
+             ;; remove the second watches - should be no updates
+             (remove-watch g :s)
+             (update!)
+             (await g)
+             (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                      {:key :g :old 21 :new 22 :tester 1}
+                      {:key :s :old 21 :new 22 :tester 2}
+                      {:key :g :old 22 :new 23 :tester 2}
+                      {:key :s :old 22 :new 23 :tester 2}
+                      {:key :s :old 23 :new 24 :tester 2}}
+                    (set @state)))
 
-    ;;          ;; add the first again, and check if it still works
-    ;;          (add-watch g :g tester1)
-    ;;          (update!)
-    ;;          (await g)
-    ;;          (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                   {:key :g :old 21 :new 22 :tester 1}
-    ;;                   {:key :s :old 21 :new 22 :tester 2}
-    ;;                   {:key :g :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 22 :new 23 :tester 2}
-    ;;                   {:key :s :old 23 :new 24 :tester 2}
-    ;;                   {:key :g :old 25 :new 26 :tester 1}}
-    ;;                 (set @state)))
+             ;; add the first again, and check if it still works
+             (add-watch g :g tester1)
+             (update!)
+             (await g)
+             (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                      {:key :g :old 21 :new 22 :tester 1}
+                      {:key :s :old 21 :new 22 :tester 2}
+                      {:key :g :old 22 :new 23 :tester 2}
+                      {:key :s :old 22 :new 23 :tester 2}
+                      {:key :s :old 23 :new 24 :tester 2}
+                      {:key :g :old 25 :new 26 :tester 1}}
+                    (set @state)))
 
-    ;;          ;; add error watches
-    ;;          (add-watch g :e err)
-    ;;          (update!)
-    ;;          (deref agent-end)
-    ;;          (sleep 1)
-    ;;          (if-let [e (agent-error g)]
-    ;;            (do
-    ;;              (is (= {:key :e :old 26 :new 27 :tester :err} (ex-data e)))
-    ;;              ;; The final call may not have gone to tester 1
-    ;;              (is (= #{{:key :g :old 20 :new 21 :tester 1}
-    ;;                       {:key :g :old 21 :new 22 :tester 1}
-    ;;                       {:key :s :old 21 :new 22 :tester 2}
-    ;;                       {:key :g :old 22 :new 23 :tester 2}
-    ;;                       {:key :s :old 22 :new 23 :tester 2}
-    ;;                       {:key :s :old 23 :new 24 :tester 2}
-    ;;                       {:key :g :old 25 :new 26 :tester 1}}
-    ;;                     (disj (set @state) {:key :g :old 26 :new 27 :tester 1}))))
-    ;;            (println "Unexpected lack of error"))))])
+             ;; add error watches
+             (add-watch g :e err)
+             (update!)
+             (deref agent-end)
+             (sleep 1)
+             (if-let [e (agent-error g)]
+               (do
+                 (is (= {:key :e :old 26 :new 27 :tester :err} (ex-data e)))
+                 ;; The final call may not have gone to tester 1
+                 (is (= #{{:key :g :old 20 :new 21 :tester 1}
+                          {:key :g :old 21 :new 22 :tester 1}
+                          {:key :s :old 21 :new 22 :tester 2}
+                          {:key :g :old 22 :new 23 :tester 2}
+                          {:key :s :old 22 :new 23 :tester 2}
+                          {:key :s :old 23 :new 24 :tester 2}
+                          {:key :g :old 25 :new 26 :tester 1}}
+                        (disj (set @state) {:key :g :old 26 :new 27 :tester 1}))))
+               (println "Unexpected lack of error"))))])
 ))
