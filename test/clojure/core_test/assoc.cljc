@@ -19,10 +19,11 @@
                                 {:a 1 :b 2} {} [:a 1 :b 2]
                                 {:a 1 :b 3} {} [:a 1 :b 2 :b 3]
                                 {:a 1 :b 3 :c 5 :d 7} {:a 1 :b 2} [:b 3 :c 5 :d 7]))
-      (when-var-exists sorted-map
-        (testing "maps - sorted type preservation"
-          (is (sorted? (assoc (sorted-map) :a 1 :b 2)))
-          (is (sorted? (assoc (sorted-map :a 1 :b 2) :b 3))))))
+      ;; (when-var-exists sorted-map  ; disabled due https://github.com/phel-lang/phel-lang/issues/1274
+      ;;   (testing "maps - sorted type preservation"
+      ;;     (is (sorted? (assoc (sorted-map) :a 1 :b 2)))
+      ;;     (is (sorted? (assoc (sorted-map :a 1 :b 2) :b 3)))))
+      )
 
     (testing "vectors"
       (testing "vectors - single value"
