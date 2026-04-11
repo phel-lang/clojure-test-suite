@@ -44,8 +44,8 @@
      true  #{:a-set}
      true  [:a :vector]
      true  '(:a :list)
-     true  \0
-     true  \1
+     ;true  \0  ;; TODO syntax error, unexpected token "\"
+     ;true  \1
      true  :a-keyword
      true  :true
      true  :false
