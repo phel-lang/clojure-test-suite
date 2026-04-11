@@ -5,6 +5,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 ## Test notes
 
+- `var_qmark.cljc` contains few new issues to report
 - `binding.cljc` contains interesting tests which are mostly disabled for now due to invalid syntax
 
 ## Running
