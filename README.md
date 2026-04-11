@@ -3,6 +3,12 @@
 Most tests are removed from the upstream repo and are added back later as things are confirmed working.
 Files may have Phel specific edits that eventually would be submitted to upstream.
 
+## Test notes
+
+- `binding.cljc` contains interesting tests which are mostly disabled for now due to invalid syntax
+
+## Running
+
 ### Pre-requisities
 
 Requires PHP 8.3+ and Composer.
