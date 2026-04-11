@@ -53,25 +53,26 @@
         ; (fn baz [x] x)  ; TODO Second argument of 'fn must be a vector
         ))
 
-    ;; (testing "things which are clearly not vars"
-    ;;   (are [v] (not (var? v))
-    ;;     'sym
-    ;;     `sym
-    ;;     "abc"
-    ;;     999
-    ;;     1.2
-    ;;     #?@(:cljs [], ; most Clojure dialects support ratios - not CLJS
-    ;;         :default [2/3])
-    ;;     ;\backspace
-    ;;     nil
-    ;;     true
-    ;;     false
-    ;;     :keyword
-    ;;     :namespace/keyword
-    ;;     '(one two three)
-    ;;     [4 5 6]
-    ;;     {:7 "8"}
-    ;;     (zipmap (take 100 (range))
-    ;;             (cycle ['foo 'bar 'baz 'qux]))
-    ;;     #{:a :b "c"}))
+    (testing "things which are clearly not vars"
+      (are [v] (not (var? v))
+        'sym
+        `sym
+        "abc"
+        999
+        1.2
+        #?@(:cljs [] ; most Clojure dialects support ratios - not CLJS
+            :phel [] ; .. or Phel
+            :default [2/3])
+        ;\backspace
+        nil
+        true
+        false
+        :keyword
+        :namespace/keyword
+        '(one two three)
+        [4 5 6]
+        {:7 "8"}
+        (zipmap (take 100 (range))
+                (cycle ['foo 'bar 'baz 'qux]))
+        #{:a :b "c"}))
     ))
