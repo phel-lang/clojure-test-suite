@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30d49ac776e73698523579e449152150",
+    "content-hash": "88c4807f50f61866aed1e0078b0ae133",
     "packages": [
         {
             "name": "amphp/amp",
@@ -245,12 +245,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phel-lang/phel-lang.git",
-                "reference": "68d484e"
+                "reference": "86e8295ee17ae6155b7eb9a28967cd6d2564d498"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/68d484e",
-                "reference": "68d484e",
+                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/86e8295ee17ae6155b7eb9a28967cd6d2564d498",
+                "reference": "86e8295ee17ae6155b7eb9a28967cd6d2564d498",
                 "shasum": ""
             },
             "require": {
@@ -310,7 +310,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phel-lang/phel-lang/issues",
-                "source": "https://github.com/phel-lang/phel-lang/tree/main"
+                "source": "https://github.com/phel-lang/phel-lang/tree/v0.32.0"
             },
             "funding": [
                 {
@@ -318,7 +318,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-11T10:06:52+00:00"
+            "time": "2026-04-11T22:25:11+00:00"
         },
         {
             "name": "phpunit/php-timer",
