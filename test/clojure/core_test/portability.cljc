@@ -67,7 +67,7 @@
          (report-failure# failure-opts#)
          (catch #?(:jank ~'jank.runtime.object_ref
                    :clj ~'Throwable
-                   :phel ~'Throwable  ;; \Throwable (?)
+                   :phel ~'\Throwable
                    :default ~'Exception) e#
            (report-success# (success-opts# e#))
            e#)
