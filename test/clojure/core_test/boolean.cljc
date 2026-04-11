@@ -14,18 +14,18 @@
      true  0.0
      true  1.0
      true  -1.0
-     ;true  (float 0.0)
-     ;true  (float 1.0)
-     ;true  (float -1.0)
-     ;true  (double 0.0)
-     ;true  (double 1.0)
-     ;true  (double -1.0)
+     true  (float 0.0)
+     true  (float 1.0)
+     true  (float -1.0)
+     true  (double 0.0)
+     true  (double 1.0)
+     true  (double -1.0)
      true  r/max-double
      true  r/min-double
-     ;true  ##Inf
-     ;true  ##-Inf
-     ;true  ##NaN
-     ;true  0N
+     true  ##Inf
+     true  ##-Inf
+     true  ##NaN
+     ;true  0N  ;; TODO lacking support
      ;true  1N
      ;true  -1N
      ;true  0.0M
@@ -44,8 +44,8 @@
      true  #{:a-set}
      true  [:a :vector]
      true  '(:a :list)
-     ;true  \0  ;; TODO syntax error, unexpected token "\"
-     ;true  \1
+     true  \0
+     true  \1
      true  :a-keyword
      true  :true
      true  :false

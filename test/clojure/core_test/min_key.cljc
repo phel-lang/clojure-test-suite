@@ -13,9 +13,9 @@
     (* x x))
 
   ;; to help with nan testing
-  ;; (defn =-or-NaN? [x y]
-  ;;   (or (= x y)
-  ;;       (and (NaN? x) (NaN? y))))
+  (defn =-or-NaN? [x y]
+    (or (= x y)
+        (and (NaN? x) (NaN? y))))
 
   (deftest test-min-key
     ;; adapted from `min.cljc`
@@ -38,37 +38,37 @@
     ;;          1/2 identity [1/2 1 2N]])))
 
     ;; NaN ordering weirdness because `(<= ##NaN 1)` and `(<= 1 ##NaN)` are both false
-    ;; (testing "IEEE754 special cases"
-    ;;   (are [expected f col] (=-or-NaN? expected (apply min-key f col))
-    ;;     ##-Inf identity [##-Inf ##Inf]
-    ;;     1 identity [1 ##Inf]
-    ;;     ##-Inf identity [1 ##-Inf]
-    ;;     ;; testing every permutation of -Inf, 1, and NaN
-    ;;     #?@(:lpy
-    ;;         [##NaN identity [##NaN 1]
-    ;;          1 identity [1 ##NaN]
-    ;;          ##NaN identity [##NaN ##-Inf 1]
-    ;;          ##NaN identity [##NaN 1 ##-Inf]]
-    ;;         :default
-    ;;         [1 identity [##NaN 1]
-    ;;          ##NaN identity [1 ##NaN]
-    ;;          ##-Inf identity [##NaN ##-Inf 1]
-    ;;          ##-Inf identity [##NaN 1 ##-Inf]])
-    ;;     #?@(:lpy
-    ;;         [##-Inf identity [##-Inf 1 ##NaN]
-    ;;          ##-Inf identity [##-Inf ##NaN 1]
-    ;;          ##-Inf identity [1 ##-Inf ##NaN]
-    ;;          ##-Inf identity [1 ##NaN ##-Inf]]
-    ;;         :cljs
-    ;;         [##NaN identity [##-Inf 1 ##NaN]
-    ;;          1 identity [##-Inf ##NaN 1]
-    ;;          ##NaN identity [1 ##-Inf ##NaN]
-    ;;          ##-Inf identity [1 ##NaN ##-Inf]]
-    ;;         :default
-    ;;         [##-Inf identity [##-Inf 1 ##NaN]
-    ;;          ##NaN identity [##-Inf ##NaN 1]
-    ;;          ##-Inf identity [1 ##-Inf ##NaN]
-    ;;          ##NaN identity [1 ##NaN ##-Inf]])))
+    (testing "IEEE754 special cases"
+      (are [expected f col] (=-or-NaN? expected (apply min-key f col))
+        ##-Inf identity [##-Inf ##Inf]
+        1 identity [1 ##Inf]
+        ##-Inf identity [1 ##-Inf]
+        ;; testing every permutation of -Inf, 1, and NaN
+        #?@(:lpy
+            [##NaN identity [##NaN 1]
+             1 identity [1 ##NaN]
+             ##NaN identity [##NaN ##-Inf 1]
+             ##NaN identity [##NaN 1 ##-Inf]]
+            :default
+            [1 identity [##NaN 1]
+             ##NaN identity [1 ##NaN]
+             ##-Inf identity [##NaN ##-Inf 1]
+             ##-Inf identity [##NaN 1 ##-Inf]])
+        #?@(:lpy
+            [##-Inf identity [##-Inf 1 ##NaN]
+             ##-Inf identity [##-Inf ##NaN 1]
+             ##-Inf identity [1 ##-Inf ##NaN]
+             ##-Inf identity [1 ##NaN ##-Inf]]
+            :cljs
+            [##NaN identity [##-Inf 1 ##NaN]
+             1 identity [##-Inf ##NaN 1]
+             ##NaN identity [1 ##-Inf ##NaN]
+             ##-Inf identity [1 ##NaN ##-Inf]]
+            :default
+            [##-Inf identity [##-Inf 1 ##NaN]
+             ##NaN identity [##-Inf ##NaN 1]
+             ##-Inf identity [1 ##-Inf ##NaN]
+             ##NaN identity [1 ##NaN ##-Inf]])))
 
     (testing "single argument"
       (is (= 1 (min-key identity 1)))

@@ -17,7 +17,7 @@
            false -1.0
            false r/max-int
            false r/min-int
-           ; false \space ; disabled due to https://github.com/phel-lang/phel-lang/issues/1283
+           false \space
            false :a-keyword
            false "str"
            false []

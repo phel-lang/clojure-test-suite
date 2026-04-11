@@ -21,7 +21,7 @@
       false :a-keyword
       false 'a-sym
       false "a string"
-      ;false \a
+      false \a
       ;false (object-array 3)
 
       ;; Basilisp does not currently implement sorted collections or array-map.

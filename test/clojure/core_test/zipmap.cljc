@@ -15,7 +15,7 @@
             [(sorted-map :a 1 :b 2)
              ["a" "b"]]                {[:a 1] "a" [:b 2] "b"}])
        ['(1 2 3) '("a" "b" "c")]  {1 "a" 2 "b" 3 "c"}
-       ;["123"    "abc"]           {\1 \a \2 \b \3 \c}
+       ["123"    "abc"]           {\1 \a \2 \b \3 \c}
        [[:a]     [nil]]           {:a nil}
        [[nil]    [:a]]            {nil :a}))
    (testing "Differing sequence sizes"
