@@ -24,7 +24,8 @@
        ;;     :lpy []
        ;;     :clj [r/min-int r/min-int] ; fixed int 2's complement oddity, see below for :cljr
        ;;     :default [r/min-int (* -1 r/min-int)])
-       #?@(:cljs []  ; TODO no rational math in PHP either
+       #?@(:cljs []
+           :phel []  ; no rational math in PHP either
            :default
            [-1/5 1/5]))
      ;; (is (NaN? (abs ##NaN)))
