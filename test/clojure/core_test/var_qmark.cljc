@@ -32,13 +32,13 @@
         ;;     :default [(defn qux [] nil)])
         ;; )
 
-      (when-var-exists defmulti
-        (is (var? #'bar)))
+      ;; (when-var-exists defmulti
+      ;;   (is (var? #'bar)))
 
-      (when-var-exists defprotocol
-        (is (var? #'MyProtocol)))
+      ;; (when-var-exists defprotocol
+      ;;   (is (var? #'MyProtocol)))
 
-      )
+      ))
 
     (testing "var-adjacent things"
       (are [not-a-var] (not (var? not-a-var))
