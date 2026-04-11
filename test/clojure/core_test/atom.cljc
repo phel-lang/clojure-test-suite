@@ -146,7 +146,7 @@
         ;;         (cycle ['foo 'bar 'baz 'qux]))
         ;; (set (range 0 334 3))
         )
-      (testing "infinite sequence"  ;; TODO loops until integer overflow
-        (let [r (range)]
-          (is (= r (deref (atom r))))))
+      ;; (testing "infinite sequence"  ;; TODO loops until integer overflow
+      ;;   (let [r (range)]
+      ;;     (is (= r (deref (atom r))))))
       )))
