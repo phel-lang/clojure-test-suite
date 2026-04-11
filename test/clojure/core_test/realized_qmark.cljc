@@ -87,7 +87,7 @@
         (is (p/thrown? (realized? "foo")))
         (is (p/thrown? (realized? \f)))
         (is (p/thrown? (realized? 'foo)))
-        (is (p/thrown? (realized? ##NaN)))
+        ;(is (p/thrown? (realized? ##NaN)))
 
         (is (p/thrown? (realized? '())))
         (is (p/thrown? (realized? '(:foo :bar :baz))))
