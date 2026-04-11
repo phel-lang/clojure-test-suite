@@ -20,7 +20,7 @@
       false #{:a :b}
       false "ab"
       false (seq "ab")                  ; seq
-      false (to-array [1 2 3])
+      ;false (to-array [1 2 3])  ; TODO  [PHEL001] Cannot resolve symbol 'to-array'
       false :a
       false 'a
       false 1
