@@ -14,6 +14,7 @@
     (t/is (= *x* :unset) "Unset is :unset")
     (t/is (= (*f* 1) 2)  "fn call")
 
+    ;; TODO Phel\Lang\Generators\SliceGenerator::toIterable(): Return value must be of type Traversable|array, Phel\Lang\Symbol returned
     ;; ;; common cases
     ;; (t/is (binding [*x* :set] (= *x*       :set)) "Can bind dynamic var.")  ;; TODO  Phel\Lang\Generators\SliceGenerator::toIterable(): Return value must be of type Traversable|array, Phel\Lang\Symbol returned
     ;; (t/is (binding [*x* :set] (= (test-fn) :set)) "Binding for indirect reference.")
@@ -21,37 +22,38 @@
     ;; (t/is (binding [*f* dec]  (= (*f* 1)   0))    "Can bind functions.")
 
     ;; ;; infinite seqs
-    ;; (binding [*x* (range)]
-    ;;   (t/is (= '(0 1 2 3) (take 4 (test-fn))) "Infinite range")
-    ;;   (t/is (= '(0 1 2 3) (take 4 (test-fn))) "Immutability"))
+    (binding [*x* (range)]
+      (t/is (= '(0 1 2 3) (take 4 (test-fn))) "Infinite range")
+      (t/is (= '(0 1 2 3) (take 4 (test-fn))) "Immutability"))
 
     ;; ;; Nested cases
-    ;; (binding [*x* :first!]
-    ;;   (let [layer-1 (fn [] (test-fn))]
-    ;;     (binding [*x* :second!]
-    ;;       (t/is (= :second! (layer-1) (test-fn)) "Value is determined at call-site"))))
-    ;; (binding [*y* *x*]
-    ;;   (t/is (= *y* :unset) "Dynamic reference is by value at binding.")
-    ;;   (binding [*x* :layer-2]
-    ;;     (t/is (= *y* :unset) "Dynamic reference does not update."))
-    ;;   (binding [*y* *x*
-    ;;             *x* :set-later]
-    ;;     (t/is (= *y* :unset) "Bind vars are applied in sequence.")))
-    ;; (let [f (fn [] (binding [*x* :inside-f] (test-fn)))]
-    ;;   (binding [*x* :outside-f]
-    ;;     (t/is (= (test-fn) :outside-f))
-    ;;     (t/is (= (f)       :inside-f) "Nested in func-call")))
-    ;; (binding [*y* (binding [*x* :bad] (test-fn))]
-    ;;   (t/is (= *y* :bad) "Binding in a binding vector"))
+    (binding [*x* :first!]
+      (let [layer-1 (fn [] (test-fn))]
+        (binding [*x* :second!]
+          (t/is (= :second! (layer-1) (test-fn)) "Value is determined at call-site"))))
+    (binding [*y* *x*]
+      (t/is (= *y* :unset) "Dynamic reference is by value at binding.")
+      (binding [*x* :layer-2]
+        (t/is (= *y* :unset) "Dynamic reference does not update."))
+      (binding [*y* *x*
+                *x* :set-later]
+        (t/is (= *y* :unset) "Bind vars are applied in sequence.")))
+    (let [f (fn [] (binding [*x* :inside-f] (test-fn)))]
+      (binding [*x* :outside-f]
+        (t/is (= (test-fn) :outside-f))
+        (t/is (= (f)       :inside-f) "Nested in func-call")))
+    (binding [*y* (binding [*x* :bad] (test-fn))]
+      (t/is (= *y* :bad) "Binding in a binding vector"))
 
     ;; ;; Threading/future/delay cases
-    ;; (let [f (delay (test-fn))]
-    ;;   (binding [*x* :here]
-    ;;     (t/is (= @f :here) "Delayed functions inherit there bindings when forced"))
-    ;;   (t/is (= @f :here) "And value persists outside binding expression"))
+    (let [f (delay (test-fn))]
+      (binding [*x* :here]
+        (t/is (= @f :here) "Delayed functions inherit there bindings when forced"))
+      (t/is (= @f :here) "And value persists outside binding expression"))
 
+    ;; TODO Unterminated list (BRACKETS)
     ;; CLJS doesn't have futures
-    ;; #?@(:cljs []  ;; TODO Phel future syntax
+    ;; #?@(:cljs []
     ;;     :default
     ;;     [(let [f (future (test-fn))]
     ;;        (binding [*x* :now-here]
