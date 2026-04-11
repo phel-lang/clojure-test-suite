@@ -11,7 +11,7 @@
         (range 0 10 2) 2 (range 10)
         (range 0 10 3) 3 (range 10)
         '(\C \o \u \e \R \c \s) 2 "Clojure Rocks" ; works on any seq
-        ;; () 2 nil  ;; TODO Value of type null is not callable
+        '() 2 nil  ;; Phel workaround value of type null is not callable
         )
       )
 
@@ -22,7 +22,7 @@
         (range 0 10 2) 2 (range 10)
         (range 0 10 3) 3 (range 10)
         '(\C \o \u \e \R \c \s) 2 "Clojure Rocks" ; works on any seq
-        ;; () 2 nil  ;; TODO Value of type null is not callable
+        '() 2 nil  ;; Phel workaround value of type null is not callable
         )
       )
 
