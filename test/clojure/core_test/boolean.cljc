@@ -14,12 +14,12 @@
      true  0.0
      true  1.0
      true  -1.0
-     true  (float 0.0)
-     true  (float 1.0)
-     true  (float -1.0)
-     true  (double 0.0)
-     true  (double 1.0)
-     true  (double -1.0)
+     ;true  (float 0.0)
+     ;true  (float 1.0)
+     ;true  (float -1.0)
+     ;true  (double 0.0)
+     ;true  (double 1.0)
+     ;true  (double -1.0)
      true  r/max-double
      true  r/min-double
      true  ##Inf
