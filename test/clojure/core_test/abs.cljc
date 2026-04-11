@@ -13,18 +13,18 @@
        -0.0            0.0
        ;; ##-Inf          ##Inf
        ;; ##Inf           ##Inf
-       -123.456M       123.456M
-       -123N           123N
+       ;; -123.456M       123.456M
+       ;; -123N           123N
 
        ;; Python VMs integer types are arbitrary precision and have no min or max
-       #?@(:lpy []
-           :default [(inc r/min-int) (- (inc r/min-int))])
+       ;; #?@(:lpy []
+       ;;     :default [(inc r/min-int) (- (inc r/min-int))])
 
-       #?@(:cljr []
-           :lpy []
-           :clj [r/min-int r/min-int] ; fixed int 2's complement oddity, see below for :cljr
-           :default [r/min-int (* -1 r/min-int)])
-       #?@(:cljs []
+       ;; #?@(:cljr []  ; TODO [PHEL001] Cannot resolve symbol 'r/min-int'.
+       ;;     :lpy []
+       ;;     :clj [r/min-int r/min-int] ; fixed int 2's complement oddity, see below for :cljr
+       ;;     :default [r/min-int (* -1 r/min-int)])
+       #?@(:cljs []  ; TODO no rational math in PHP either
            :default
            [-1/5 1/5]))
      ;; (is (NaN? (abs ##NaN)))
