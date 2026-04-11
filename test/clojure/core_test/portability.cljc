@@ -52,8 +52,10 @@
      :default [msg form])
   (let [body (drop 1 form)]
     `(let [report-success# #?(:lpy (fn [_])
+                              :phel clojure.test/do-report
                               :default t/do-report)
            report-failure# #?(:lpy (partial vswap! t/*test-failures* conj)
+                              :phel clojure.test/do-report
                               :default t/do-report)
            success-opts# (fn [~'error]
                            {:type :pass :message '~msg
