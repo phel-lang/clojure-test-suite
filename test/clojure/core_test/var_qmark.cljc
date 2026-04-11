@@ -24,19 +24,19 @@
         #'*assert*          ; dynamic  ;; TODO these get commented out in Phel(?)
 
         ;; TODO 'def inside of a 'def is forbidden
-        #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
-            :cljs [],
-            :default [(def baz)])
-        #?@(; CLJS `defn` produces a non-var
-            :cljs [],
-            :default [(defn qux [] nil)])
-        )
+        ;; #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
+        ;;     :cljs [],
+        ;;     :default [(def baz)])
+        ;; #?@(; CLJS `defn` produces a non-var
+        ;;     :cljs [],
+        ;;     :default [(defn qux [] nil)])
+        ;; )
 
-      ;;(when-var-exists defmulti
-      ;; (is (var? #'bar))) ;; TODO Unterminated list (EOF)  defmulti literal not implemented?
+      (when-var-exists defmulti
+        (is (var? #'bar)))
 
-      ;; (when-var-exists defprotocol
-      ;;   (is (var? #'MyProtocol)))  ;; TODO Unterminated list (EOF)
+      (when-var-exists defprotocol
+        (is (var? #'MyProtocol)))
 
       )
 
