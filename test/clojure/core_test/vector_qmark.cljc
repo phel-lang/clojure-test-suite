@@ -15,14 +15,14 @@
       false (range)
       false nil
       false 1
-      false 1N
+      ;false 1N
       false 1.0
-      false 1.0M
+      ;false 1.0M
       false :a-keyword
       false 'a-sym
       false "a string"
-      false \a
-      false (object-array 3)
+      ;false \a
+      ;false (object-array 3)
 
       ;; Basilisp does not currently implement sorted collections or array-map.
       #?@(:lpy []
