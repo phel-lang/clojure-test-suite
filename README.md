@@ -9,7 +9,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 - `add_watch.cljc` has syntax error on one test, also there's `ref` test disabled (possible to support in phel?)
 
 ### Lacking features
-- boolean.cljc has unsupported math literals (TODO)
+- boolean.cljc and other files have commented math literals currently commented (TODO)
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
 
 ## Running
