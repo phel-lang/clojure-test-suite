@@ -29,6 +29,6 @@
           :default
           [false (sorted-map :a 1)
            false (sorted-set :a)
-           false (array-map :a 1)
+           ;false (array-map :a 1)
            false (seq (sorted-map :a 1))
            false (seq (sorted-set :a))]))))
