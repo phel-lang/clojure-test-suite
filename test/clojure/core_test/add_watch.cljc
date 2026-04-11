@@ -20,7 +20,8 @@
                                           (catch #?(:cljs :default
                                                     :clj clojure.lang.ExceptionInfo
                                                     :cljr clojure.lang.ExceptionInfo
-                                                    :lpy basilisp.lang.exception/ExceptionInfo) e
+                                                    :lpy basilisp.lang.exception/ExceptionInfo
+                                                    :phel \phel\lang\ExInfoException) e  ; TODO Other dialects ok? Could also load in ns form to avoid backslashes
                                             (let [data (ex-data e)]
                                               (vswap! state conj data)))))]
                         (do-update a)
