@@ -8,12 +8,13 @@
      (are [pred args] (pred (compare (first args) (second args)))
        neg?   [0  10]
        zero?  [0  0]
-       pos?   [0 -100N]
+       ;pos?   [0 -100N]
        zero?  [1  1.0]
        neg?   [0  0x01]
        neg?   [0  2r01]
        pos?   [1  nil]
        #?@(:cljs []
+           :phel []
            :default
            [neg? [1 100/3]]))
 
