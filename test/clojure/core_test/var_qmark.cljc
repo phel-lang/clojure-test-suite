@@ -21,15 +21,15 @@
         #'foo               ; locally-defined
         #'var?              ; clojure.core
         #'i-am-dynamic      ; dynamic & local
-        #'*assert*          ; dynamic
+        #'*assert*          ; dynamic  ;; TODO these get commented out in Phel(?)
 
         ;; TODO 'def inside of a 'def is forbidden
-        ;; #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
-        ;;     :cljs [],
-        ;;     :default [(def baz)])
-        ;; #?@(; CLJS `defn` produces a non-var
-        ;;     :cljs [],
-        ;;     :default [(defn qux [] nil)])
+        #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
+            :cljs [],
+            :default [(def baz)])
+        #?@(; CLJS `defn` produces a non-var
+            :cljs [],
+            :default [(defn qux [] nil)])
         )
 
       ;;(when-var-exists defmulti
