@@ -48,9 +48,9 @@
         'foo
         'var?
         'i-am-dynamic
-        ; *assert*  ; TODO [PHEL001] Cannot resolve symbol '*assert*'
+        *assert*
         #(+ 1 %)
-        ; (fn baz [x] x)  ; TODO Second argument of 'fn must be a vector
+        (fn baz [x] x)
         ))
 
     (testing "things which are clearly not vars"
@@ -63,7 +63,7 @@
         #?@(:cljs [] ; most Clojure dialects support ratios - not CLJS
             :phel [] ; .. or Phel
             :default [2/3])
-        ;\backspace
+        \backspace
         nil
         true
         false
