@@ -53,7 +53,9 @@
 
     ;; TODO Unterminated list (BRACKETS)
     ;; CLJS doesn't have futures
+    ;; Phel supports single thread futures only
     ;; #?@(:cljs []
+    ;;     :phel []
     ;;     :default
     ;;     [(let [f (future (test-fn))]
     ;;        (binding [*x* :now-here]
@@ -68,6 +70,7 @@
     ;;                    (future (test-fn))))]
     ;;          (binding [*x* :derefer]
     ;;            (let [derefed-f @f]
-    ;;              (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))]
+    ;;              (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
+    ;;      ]
     ;;     )
     ))
