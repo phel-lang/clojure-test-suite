@@ -5,13 +5,13 @@
 (when-var-exists ancestors
 
   ; Some classes for testing ancestors by type inheritance
-  (def AncestorT #?(:cljs js/Object :lpy python/object :default Object))
-  (def ChildT #?(:cljs :default :lpy basilisp.lang.set/PersistentSet :default clojure.lang.PersistentHashSet))
+  (def AncestorT #?(:cljs js/Object :lpy python/object :phel \Phel\Lang\AbstractType :default Object))
+  (def ChildT #?(:cljs :default :lpy basilisp.lang.set/PersistentSet :phel \Phel\Lang\Collections\HashSet\PersistentHashSet :default clojure.lang.PersistentHashSet))
 
   ; Some custom types for testing ancestors by type inheritance
   (defprotocol TestAncestorsProtocol)
-  (defrecord TestAncestorsRecord [] TestAncestorsProtocol)
-  (deftype TestAncestorsType [] TestAncestorsProtocol)
+  (defrecord TestAncestorsRecord [] TestAncestorsProtocol)  ;; TODO [PHEL001] Cannot resolve symbol 'defrecord'
+  (deftype TestAncestorsType [] TestAncestorsProtocol)  ;; TODO [PHEL001] Cannot resolve symbol 'deftype'.
 
   ; A global hierarchy for testing `ancestors tag` and `ancestors h tag`
   (def global-hierarchy [[TestAncestorsRecord ::record]
