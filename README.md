@@ -14,8 +14,6 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 Some maybe relevant, some not.
 
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
-- long.cljc
-- short.cljc
 
 - mod.cljc
 - num.cljc
