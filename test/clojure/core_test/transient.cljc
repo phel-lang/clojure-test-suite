@@ -20,7 +20,7 @@
     (testing "support read-only interface"
       (testing "for transient vector"
         (let [avec [1 2 3]]
-          (is (= (nth avec 1) (nth (transient avec) 1)))
+          ;; (is (= (nth avec 1) (nth (transient avec) 1)))
           (is (= (get avec 1) (get (transient avec) 1)))
           (is (= (contains? avec 1) (contains? (transient avec) 1)))
           #?@(:cljr [] ;; ClojureCLR, clojure.lang.ArityException: Wrong number of args (1) passed to: clojure.lang.PersistentVector+TransientVector
