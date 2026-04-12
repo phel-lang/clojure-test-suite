@@ -24,6 +24,8 @@ Some maybe relevant, some not.
 - unsigned-bit-shift-right (datatype not in PHP?)
 - with_precision.cljc
 
+- with_out_str <-> with-output-buffering
+
 - mod.cljc
 - num.cljc
 - numerator.cljc
