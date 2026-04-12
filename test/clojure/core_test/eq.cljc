@@ -89,12 +89,13 @@
   ;;             r' r]  ; [PHEL001] Cannot resolve symbol 'r'
   ;;         (eq r r'))))
 
-  ;; (testing "functions"
-  ;;   ;; identical? functions are eq, but no other functions
-  ;;   (is (not (eq #(+ 2 %) #(+ 2 %))))
-  ;;   (is (let [f #(+ 2 %)
-  ;;             f' f]  ; TODO [PHEL001] Cannot resolve symbol 'f'
-  ;;         (eq f f'))))
+  (testing "functions"
+    ;; identical? functions are eq, but no other functions
+    (is (not (eq #(+ 2 %) #(+ 2 %))))
+    (is (let [f #(+ 2 %)
+              f' f]  ; TODO [PHEL001] Cannot resolve symbol 'f'
+          (eq f f')))
+    )
 
   ;; (testing "variadic eq"
   ;;   (is (eq 2 2 2))
