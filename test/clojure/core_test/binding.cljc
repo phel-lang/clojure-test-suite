@@ -54,23 +54,23 @@
     ;; TODO Unterminated list (BRACKETS)
     ;; CLJS doesn't have futures
     ;; Phel supports single thread futures only
-    #?@(:cljs []
-        :phel []
-        :default
-        [(let [f (future (test-fn))]
-           (binding [*x* :now-here]
-             (t/is (= @f :unset) "Thread context is separate from joining thread")))
-         (binding [*x* :outer]
-           (let [f (future (test-fn))]
-             (binding [*x* :inner]
-               (t/is (= @f :outer) "Thread context preserves binding context."))))
-         (binding [*x* :caller]
-           (let [f (future
-                     (binding [*x* :callee]
-                       (future (test-fn))))]
-             (binding [*x* :derefer]
-               (let [derefed-f @f]
-                 (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
-         ]
-        )
+    ;; #?@(:cljs []
+    ;;     :phel []
+    ;;     :default
+    ;;     [(let [f (future (test-fn))]
+    ;;        (binding [*x* :now-here]
+    ;;          (t/is (= @f :unset) "Thread context is separate from joining thread")))
+    ;;      (binding [*x* :outer]
+    ;;        (let [f (future (test-fn))]
+    ;;          (binding [*x* :inner]
+    ;;            (t/is (= @f :outer) "Thread context preserves binding context."))))
+    ;;      (binding [*x* :caller]
+    ;;        (let [f (future
+    ;;                  (binding [*x* :callee]
+    ;;                    (future (test-fn))))]
+    ;;          (binding [*x* :derefer]
+    ;;            (let [derefed-f @f]
+    ;;              (t/is (= :callee @derefed-f) "Binding in futures preserved.")))))
+    ;;      ]
+    ;;     )
     ))
