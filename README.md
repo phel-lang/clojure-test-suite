@@ -15,6 +15,9 @@ Some maybe relevant, some not.
 - mod.cljc
 - num.cljc
 - numerator.cljc
+- ratio_qmark.cljc
+- rational_qmark.cljc
+- rationalize.cljc
 
 ## Running
 
