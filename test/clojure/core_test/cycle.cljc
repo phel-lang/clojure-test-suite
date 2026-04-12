@@ -12,7 +12,7 @@
         1 '(1 2 3) [1]
         3 '(1 2 3) [1 2 3]
         7 '(1 2 3) [1 2 3 1 2 3 1]
-        ;; 3 (range) [0 1 2]  ; TODO Phel hangs (probably counts until integer overflow)
+        3 (range) [0 1 2]  ; TODO Phel hangs (probably counts until integer overflow)
         ;; Basilisp does not currently implement sorted collections.
         #?@(:lpy [] :default [7 (sorted-set 1 2 3) [1 2 3 1 2 3 1]]))
 
