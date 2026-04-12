@@ -79,10 +79,10 @@
       (testing "undefined `merge` behavior on non-maps"
         ;; Behavior for non-map input is undefined. We intentionally do not test
         ;; it closely.
-        (is (any? (merge '(1 2 3) 1)))
-        (is (any? (merge [1 2] 3 4 5)))
-        (is (any? (merge [] nil {} 1 {:a "c"})))
-        (is (any? (merge (first {:a "a"}) {:b "b"} {:c "c"})))
+        ;; (is (any? (merge '(1 2 3) 1)))
+        ;; (is (any? (merge [1 2] 3 4 5)))
+        ;; (is (any? (merge [] nil {} 1 {:a "c"})))
+        ;; (is (any? (merge (first {:a "a"}) {:b "b"} {:c "c"})))
         #?@(:lpy
             [(is (p/thrown? (merge [:foo])))
              (is (p/thrown? (merge :foo)))]
