@@ -6,11 +6,8 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 ## Test notes
 
 - derive.cljc needs phel specific classes set up to test (`String` not existing)
-- `binding.cljc` contains interesting tests which are mostly disabled for now due to invalid syntax
-- `add_watch.cljc` has syntax error on one test, also there's `ref` test disabled (possible to support in phel?)
 
 ### Lacking features
-- boolean.cljc and other files have commented math literals currently commented (TODO)
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
 
 ## Running
