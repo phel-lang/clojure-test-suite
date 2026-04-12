@@ -7,6 +7,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 ### Need Phel compatibility modifications
 
+- taps.cljc
 - reduce.cljc
 - derive.cljc (`String` not existing)
 - str.cljc has some to make it run but should go through better
