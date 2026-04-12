@@ -16,7 +16,7 @@
 
     ;; TODO Phel\Lang\Generators\SliceGenerator::toIterable(): Return value must be of type Traversable|array, Phel\Lang\Symbol returned
     ;; ;; common cases
-    ;; (t/is (binding [*x* :set] (= *x*       :set)) "Can bind dynamic var.")  ;; TODO  Phel\Lang\Generators\SliceGenerator::toIterable(): Return value must be of type Traversable|array, Phel\Lang\Symbol returned
+    (t/is (binding [*x* :set] (= *x*       :set)) "Can bind dynamic var.")
     ;; (t/is (binding [*x* :set] (= (test-fn) :set)) "Binding for indirect reference.")
     ;; (t/is (binding [*x* nil]  (= (test-fn) nil))  "Dynamic vars are nullable.")
     ;; (t/is (binding [*f* dec]  (= (*f* 1)   0))    "Can bind functions.")
