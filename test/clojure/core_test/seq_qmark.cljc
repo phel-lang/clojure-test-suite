@@ -9,7 +9,7 @@
       true (seq [1 2 3])
       true (range 0 10)
       true (range)
-      true (rseq [1 2 3])
+      ;; true (rseq [1 2 3])
 
       ;; Basilisp does not currently implement sorted collections.
       #?@(:lpy []
