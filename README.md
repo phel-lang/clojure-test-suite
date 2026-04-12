@@ -13,6 +13,8 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 ### Unimplemented and not reported so far
 Some maybe relevant, some not.
 
+- star_squote, arbitrary precision multiplication (https://clojuredocs.org/clojure.core/*')
+
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
 
 - mod.cljc
