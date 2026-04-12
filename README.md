@@ -9,6 +9,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 ### Lacking features
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
+- long.cljc: long is unimplemented and left out for now (not reported)
 
 ## Running
 
