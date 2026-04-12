@@ -15,6 +15,8 @@ Some maybe relevant, some not.
 
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
 - long.cljc
+- short.cljc
+
 - mod.cljc
 - num.cljc
 - numerator.cljc
