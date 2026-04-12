@@ -23,20 +23,21 @@
         #'i-am-dynamic      ; dynamic & local
         #'*assert*          ; dynamic  ;; TODO these get commented out in Phel(?)
 
-        ;; TODO 'def inside of a 'def is forbidden
+        ;; TODO Two or three arguments are required for 'def. Got 2
         ;; #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
         ;;     :cljs [],
         ;;     :default [(def baz)])
-        ;; #?@(; CLJS `defn` produces a non-var
-        ;;     :cljs [],
-        ;;     :default [(defn qux [] nil)])
-        ;; )
 
-      ;; (when-var-exists defmulti
-      ;;   (is (var? #'bar)))
+        #?@(; CLJS `defn` produces a non-var
+            :cljs [],
+            :default [(defn qux [] nil)])
+        ;; )  ;; TODO parens messed up (??) revert to upstream version soon
 
-      ;; (when-var-exists defprotocol
-      ;;   (is (var? #'MyProtocol)))
+      (when-var-exists defmulti
+        (is (var? #'bar)))
+
+      (when-var-exists defprotocol
+        (is (var? #'MyProtocol)))
 
       ))
 
@@ -48,7 +49,7 @@
         'foo
         'var?
         'i-am-dynamic
-        ;; *assert* TODO https://github.com/phel-lang/phel-lang/issues/1315
+        *assert*
         #(+ 1 %)
         (fn baz [x] x)
         ))
