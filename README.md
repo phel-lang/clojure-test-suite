@@ -9,6 +9,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 - reduce.cljc
 - derive.cljc (`String` not existing)
+- str.cljc has some to make it run but should go through better
 
 ### Unimplemented and not reported so far
 Some maybe relevant, some not.
