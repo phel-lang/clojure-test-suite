@@ -20,6 +20,7 @@ Some maybe relevant, some not.
 - ratio_qmark.cljc
 - rational_qmark.cljc
 - rationalize.cljc
+- rem.cljc
 
 ## Running
 
