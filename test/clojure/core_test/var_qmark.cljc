@@ -21,25 +21,22 @@
         #'foo               ; locally-defined
         #'var?              ; clojure.core
         #'i-am-dynamic      ; dynamic & local
-        #'*assert*          ; dynamic  ;; TODO these get commented out in Phel(?)
+        #'*assert*          ; dynamic
 
-        ;; TODO Two or three arguments are required for 'def. Got 2
+        ;; TODO https://github.com/phel-lang/phel-lang/issues/1361
         ;; #?@(; CLJS `def` doesn't necessarily evaluate to the value of the var:
         ;;     :cljs [],
         ;;     :default [(def baz)])
-
+        
         #?@(; CLJS `defn` produces a non-var
             :cljs [],
-            :default [(defn qux [] nil)])
-        ;; )  ;; TODO parens messed up (??) revert to upstream version soon
+            :default [(defn qux [] nil)]))
 
       (when-var-exists defmulti
         (is (var? #'bar)))
-
+      
       (when-var-exists defprotocol
-        (is (var? #'MyProtocol)))
-
-      ))
+        (is (var? #'MyProtocol))))
 
     (testing "var-adjacent things"
       (are [not-a-var] (not (var? not-a-var))
@@ -51,8 +48,7 @@
         'i-am-dynamic
         *assert*
         #(+ 1 %)
-        (fn baz [x] x)
-        ))
+        (fn baz [x] x)))
 
     (testing "things which are clearly not vars"
       (are [v] (not (var? v))
@@ -62,7 +58,7 @@
         999
         1.2
         #?@(:cljs [] ; most Clojure dialects support ratios - not CLJS
-            :phel [] ; .. or Phel
+            :phel []
             :default [2/3])
         \backspace
         nil
@@ -75,5 +71,4 @@
         {:7 "8"}
         (zipmap (take 100 (range))
                 (cycle ['foo 'bar 'baz 'qux]))
-        #{:a :b "c"}))
-    ))
+        #{:a :b "c"}))))
