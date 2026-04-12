@@ -15,20 +15,20 @@
       false (range)
       false nil
       false 1
-      ;false 1N
+      false 1N
       false 1.0
-      ;false 1.0M
+      false 1.0M
       false :a-keyword
       false 'a-sym
       false "a string"
       false \a
-      ;false (object-array 3)
+      false (object-array 3)
 
       ;; Basilisp does not currently implement sorted collections or array-map.
       #?@(:lpy []
           :default
           [false (sorted-map :a 1)
            false (sorted-set :a)
-           ;false (array-map :a 1)
+           false (array-map :a 1)
            false (seq (sorted-map :a 1))
            false (seq (sorted-set :a))]))))

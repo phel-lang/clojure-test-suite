@@ -25,12 +25,12 @@
      true  ##Inf
      true  ##-Inf
      true  ##NaN
-     ;true  0N  ;; TODO lacking support
-     ;true  1N
-     ;true  -1N
-     ;true  0.0M
-     ;true  1.0M
-     ;true  -1.0M
+     true  0N
+     true  1N
+     true  -1N
+     true  0.0M
+     true  1.0M
+     true  -1.0M
      false nil
      true  true
      false false

@@ -19,23 +19,24 @@
 
   (deftest test-min-key
     ;; adapted from `min.cljc`
-    ;; (testing "numeric ordering"
-    ;;   (are [expected f col] (= expected (apply min-key f col))
-    ;;     1 identity [1 2]
-    ;;     1 identity [1 3 2]
-    ;;     1N identity [1N 2N]
-    ;;     1N identity [2N 1N 3N]
-    ;;     1N identity [1N 2]
-    ;;     1 identity [1 2N]
-    ;;     1.0 identity [1.0 2.0]
-    ;;     1 identity [1 2.0]
-    ;;     1.0 identity [1.0 2]
-    ;;     #?@(:cljs []
-    ;;         :default
-    ;;         [1/2 identity [1/2 2/2]
-    ;;          1/2 identity [1/2 2/2 3/2]
-    ;;          1/2 identity [1/2 1]
-    ;;          1/2 identity [1/2 1 2N]])))
+    (testing "numeric ordering"
+      (are [expected f col] (= expected (apply min-key f col))
+        1 identity [1 2]
+        1 identity [1 3 2]
+        1N identity [1N 2N]
+        1N identity [2N 1N 3N]
+        1N identity [1N 2]
+        1 identity [1 2N]
+        1.0 identity [1.0 2.0]
+        1 identity [1 2.0]
+        1.0 identity [1.0 2]
+        #?@(:cljs []
+            :phel []
+            :default
+            [1/2 identity [1/2 2/2]
+             1/2 identity [1/2 2/2 3/2]
+             1/2 identity [1/2 1]
+             1/2 identity [1/2 1 2N]])))
 
     ;; NaN ordering weirdness because `(<= ##NaN 1)` and `(<= 1 ##NaN)` are both false
     (testing "IEEE754 special cases"

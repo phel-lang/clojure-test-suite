@@ -40,6 +40,6 @@
         (is (= :foo (the-fn [:x :y :z])))
         (is (= :foo (the-fn {:k :v})))
         (is (= :foo (the-fn even?)))
-        ;; (is (= :foo (the-fn (some-fn even? odd?))))  ;; TODO unimplemented
+        (is (= :foo (the-fn (some-fn even? odd?))))  ;; TODO unimplemented
         (is (= :foo (apply the-fn (take 1000 (cycle ['foo "bar" :baz])))))
         (is (apply = (map (constantly (rand-int 100)) [:a :b :c :d :e :f])))))))

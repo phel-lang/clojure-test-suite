@@ -6,9 +6,9 @@
 (when-var-exists decimal?
  (deftest test-decimal?
    (are [expected x] (= expected (decimal? x))
-     ;true  0.0M
-     ;true  1.0M
-     ;true  -1.0M
+     true  0.0M
+     true  1.0M
+     true  -1.0M
 
      false 0
      false 1
@@ -23,9 +23,9 @@
      false ##Inf
      false ##-Inf
      false ##NaN
-     ;false 0N
-     ;false 1N
-     ;false -1N
+     false 0N
+     false 1N
+     false -1N
      false nil
      false true
      false false

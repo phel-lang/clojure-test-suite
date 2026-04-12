@@ -40,7 +40,7 @@
       (is (= (into [] (range 100)) (apply vector (range 100)))))
 
     (testing "different types together"
-      ;(is (= [1 2.5 3N 4M] (vector 1 2.5 3N 4M)))
+      (is (= [1 2.5 3N 4M] (vector 1 2.5 3N 4M)))
       (is (= [1 :a "b" \c true nil '() [] #{} {}]
              (vector 1 :a "b" \c true nil '() [] #{} {}))))
 

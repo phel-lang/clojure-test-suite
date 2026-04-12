@@ -12,9 +12,9 @@
       :kw :kw-result
       "string" :string-result
       1 :integer-result
-      ;; 2N :big-integer-result
+      2N :big-integer-result
       3.0 :double-result
-      ;; 4.0M :big-decimal-result
+      4.0M :big-decimal-result
       #?@(:cljs []
           :phel []
           :default
@@ -78,20 +78,20 @@
         #?@(:cljs ; all numbers are double-precision floating point in CLJS
             [1 :integer-result
              1.0 :integer-result
-             ;1N :integer-result
-             ;1.0M :integer-result
+             1N :integer-result
+             1.0M :integer-result
              2 :big-integer-result
-             ;2N :big-integer-result
+             2N :big-integer-result
              2.0 :big-integer-result
-             ;2.0M :big-integer-result
+             2.0M :big-integer-result
              3 :double-result
-             ;3N :double-result
+             3N :double-result
              3.0 :double-result
-             ;3.0M :double-result
+             3.0M :double-result
              4 :big-decimal-result
-             ;4N :big-decimal-result
+             4N :big-decimal-result
              4.0 :big-decimal-result
-             ;4.0M :big-decimal-result
+             4.0M :big-decimal-result
              ]
             ;; In Python, 1 and True share the same hash value, so it is not
             ;; possible to distinguish between them in a map. The "winning"
@@ -99,38 +99,38 @@
             :lpy
             [1 :boolean-true-result
              1.0 :boolean-true-result
-             ;1N :boolean-true-result
-             ;1.0M :boolean-true-result
+             1N :boolean-true-result
+             1.0M :boolean-true-result
              2 :big-integer-result
-             ;2N :big-integer-result
+             2N :big-integer-result
              2.0 :big-integer-result
-             ;2.0M :big-integer-result
+             2.0M :big-integer-result
              3 :double-result
-             ;3N :double-result
+             3N :double-result
              3.0 :double-result
-             ;3.0M :double-result
+             3.0M :double-result
              4 :big-decimal-result
-             ;4N :big-decimal-result
+             4N :big-decimal-result
              4.0 :big-decimal-result
-             ;;4.0M :big-decimal-result
+             4.0M :big-decimal-result
              ]
             :default
             [1 :integer-result
-             ;1N :integer-result ; JVM sees ints and big ints as equal for int-sized values
+             1N :integer-result ; JVM sees ints and big ints as equal for int-sized values
              1.0 :default ; but doubles and big-doubles aren't the same
-             ;1.0M :default
+             1.0M :default
              2 :big-integer-result
-             ;2N :big-integer-result
+             2N :big-integer-result
              2.0 :default
-             ;2.0M :default
+             2.0M :default
              3 :default
-             ;3N :default
+             3N :default
              3.0 :double-result
-             ;3.0M :default ; does discriminate between double and big-decimal
+             3.0M :default ; does discriminate between double and big-decimal
              4 :default
-             ;4N :default
+             4N :default
              4.0 :default
-             ;;4.0M :big-decimal-result
+             4.0M :big-decimal-result
              ])
             #?@(:cljs []
                 :phel []

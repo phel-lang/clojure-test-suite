@@ -26,7 +26,7 @@
     ;;     (is (= {:a "a"} (meta (atom nil :meta (sorted-map :a "a"))))))
     ;;   (when-var-exists clojure.core/array-map
     ;;     (is (= {:a "a"} (meta (atom nil :meta (array-map :a "a"))))))
-    ;;   (when-var-exists clojure.core/hash-map
+    ;;   (when-var-exists clojure.core/hash-mapg
     ;;     (is (= {:a "a"} (meta (atom nil :meta (hash-map :a "a"))))))
     ;;   #?(:cljs (is (= 5 (meta (atom nil :meta 5)))),
     ;;      :lpy (is (= 5 (meta (atom nil :meta 5)))),
