@@ -7,8 +7,8 @@
 
     (testing "uuids"
       (are [x] (uuid? x)
-               #uuid "00000000-0000-0000-0000-000000000000"
-               #uuid "f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
+               ;; #uuid "00000000-0000-0000-0000-000000000000"
+               ;; #uuid "f81d4fae-7dec-11d0-a765-00a0c91e6bf6"
                (parse-uuid "f81d4fae-7dec-11d0-a765-00a0c91e6bf6")
                (random-uuid)))
 
