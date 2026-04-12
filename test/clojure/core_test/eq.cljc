@@ -18,31 +18,31 @@
       3.14 3.14
       3.141592M 3.141592M))
 
-  ;; (testing "two scalars unequal"
-  ;;   (are [in ex] (not (eq in ex))
-  ;;     nil false
-  ;;     true false
-  ;;     \a \b
-  ;;     "yellow" "purple"
-  ;;     :hello :goodbye
-  ;;     :my/hello 'my/hello
-  ;;     :my/hello :your/hello
-  ;;     'one-fish 'two-fish
-  ;;     'red/fish 'red/coral))
+  (testing "two scalars unequal"
+    (are [in ex] (not (eq in ex))
+      nil false
+      true false
+      \a \b
+      "yellow" "purple"
+      :hello :goodbye
+      :my/hello 'my/hello
+      :my/hello :your/hello
+      'one-fish 'two-fish
+      'red/fish 'red/coral))
 
   (testing "a string is not a list of chars"
     (is (not (eq "hello" '(\h \e \l \l \o)))))
 
-  ;; (testing "collections"
-  ;;   (are [in ex] (eq in ex)
-  ;;     [] '()
-  ;;     '() []
-  ;;     [1 2 3] '(1 2 3)
-  ;;     '(1 2 3) [1 2 3]
-  ;;     [0 1 2] (range 3)
-  ;;     '(0 1 2) (range 3)
-  ;;     {:a 1 "b" :2 3 \c \d 4} {"b" :2 \d 4 3 \c :a 1}
-  ;;     #{:a \b "c"} #{\b "c" :a}))
+  (testing "collections"
+    (are [in ex] (eq in ex)
+      [] '()
+      '() []
+      [1 2 3] '(1 2 3)
+      '(1 2 3) [1 2 3]
+      [0 1 2] (range 3)
+      '(0 1 2) (range 3)
+      {:a 1 "b" :2 3 \c \d 4} {"b" :2 \d 4 3 \c :a 1}
+      #{:a \b "c"} #{\b "c" :a}))
 
   (testing "collections unequal"
     (are [in ex] (not (eq in ex))
@@ -80,30 +80,32 @@
       {:just '(:a {:plain [:simple #{:tailor}]})} {:just '(:a {:plain [:simple #{:tailor}]})}
       [1 '(2 3 [4])] (list 1 [2 3 '(4)])))
 
-  ;; (testing "regex"
-  ;;   ;; Basilisp regex patterns compare equal and identical?
-  ;;   #?(:lpy (is (eq #"my regex" #"my regex"))
-  ;;      ;; Value-equal regex are NOT eq, only identical?
-  ;;      :default (is (not (eq #"my regex" #"my regex"))))
-  ;;   (is (let [r #"my regex"
-  ;;             r' r]  ; [PHEL001] Cannot resolve symbol 'r'
-  ;;         (eq r r'))))
+  (testing "regex"
+    ;; Basilisp regex patterns compare equal and identical?
+    #?(:lpy (is (eq #"my regex" #"my regex"))
+       ;; Value-equal regex are NOT eq, only identical?
+       :default (is (not (eq #"my regex" #"my regex"))))
+    ;; (is (let [r #"my regex"
+    ;;           r' r]  ; [PHEL001] Cannot resolve symbol 'r'
+    ;;       (eq r r')))
+    )
 
-  ;; (testing "functions"
-  ;;   ;; identical? functions are eq, but no other functions
-  ;;   (is (not (eq #(+ 2 %) #(+ 2 %))))
-  ;;   (is (let [f #(+ 2 %)
-  ;;             f' f]  ; TODO [PHEL001] Cannot resolve symbol 'f'
-  ;;         (eq f f'))))
+  (testing "functions"
+    ;; identical? functions are eq, but no other functions
+    (is (not (eq #(+ 2 %) #(+ 2 %))))
+    ;; (is (let [f #(+ 2 %)
+    ;;           f' f]  ; TODO [PHEL001] Cannot resolve symbol 'f'
+    ;;       (eq f f')))
+    )
 
-  ;; (testing "variadic eq"
-  ;;   (is (eq 2 2 2))
-  ;;   (is (eq "beep" "beep" "beep" "beep"))
-  ;;   (is (let [my-inc #(+ 1 %)]
-  ;;         (eq my-inc my-inc my-inc)))   ; TODO [PHEL001] Cannot resolve symbol 'my-inc'. Did you mean 'inc' or 'min'?
-  ;;   (is (not (eq '() [] [] (list) {})))
-  ;;   (is (not (eq 2 2 3 2 2 2 2)))
-  ;;   (is (not (eq nil \a \a \a))))
+  (testing "variadic eq"
+    (is (eq 2 2 2))
+    (is (eq "beep" "beep" "beep" "beep"))
+    ;; (is (let [my-inc #(+ 1 %)]
+    ;;       (eq my-inc my-inc my-inc)))   ; TODO [PHEL001] Cannot resolve symbol 'my-inc'. Did you mean 'inc' or 'min'?
+    (is (not (eq '() [] [] (list) {})))
+    (is (not (eq 2 2 3 2 2 2 2)))
+    (is (not (eq nil \a \a \a))))
 
   ;; Platform differences
   #?(:clj (testing "jvm"
