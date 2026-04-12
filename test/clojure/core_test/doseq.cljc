@@ -9,8 +9,8 @@
     ;; [PHEL005] Error in expanding macro "phel\core\dofor"
     ;;  Expanding: (dofor [x [1 2 3]] x)
     ;;  Cause: This verb is not supported in for loop [1 2 3]
-    ;; (testing "returns nil"
-    ;;   (is (nil? (doseq [x [1 2 3]] x))))
+    (testing "returns nil"
+      (is (nil? (doseq [x [1 2 3]] x))))
 
     ;; [PHEL005] Error in expanding macro "phel\core\dofor"
     ;; Expanding: (dofor [x [1 2 3]] (swap! acc conj x))
