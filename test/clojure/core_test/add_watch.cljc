@@ -73,78 +73,78 @@
           (is (contains? (set (keyed :e @state))
                          {:key :e :ref r :old 14 :new 15 :tester :err})))))
 
-    ;; TODO Unterminated list (BRACKETS) Probably due to #' syntax
-    ;; #?@(:cljs []
-    ;;     :default
-    ;;     [(def testvar-a 0)
-    ;;      (def testvar-b 10)
+    ;; TODO [PHEL001] Cannot resolve symbol 'alter-var-root'
+    #?@(:cljs []
+        :default
+        [(def testvar-a 0)
+         (def testvar-b 10)
 
-    ;;      (testing "watch var"
-    ;;        ;; checks atoms and interspersed multiple watches
-    ;;        (let [state (volatile! [])
-    ;;              tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
-    ;;              tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
-    ;;              err (fn [key ref old new]
-    ;;                    (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
-    ;;              update! (fn []
-    ;;                        (let [do-update (fn [x]
-    ;;                                          (try
-    ;;                                            (alter-var-root x inc)
-    ;;                                            (catch #?(:cljs :default
-    ;;                                                      :clj clojure.lang.ExceptionInfo
-    ;;                                                      :cljr clojure.lang.ExceptionInfo
-    ;;                                                      :lpy basilisp.lang.exception/ExceptionInfo
-    ;;                                                      :phel \phel\lang\ExInfoException) e
-    ;;                                              (let [{:keys [old] :as data} (ex-data e)]
-    ;;                                                (vswap! state conj data)))))]
-    ;;                          (do-update #'testvar-a)
-    ;;                          (do-update #'testvar-b)))
-    ;;              keyed (fn [k s] (filter #(= k (:key %)) s))]
+         (testing "watch var"
+           ;; checks atoms and interspersed multiple watches
+           (let [state (volatile! [])
+                 tester1 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 1}))
+                 tester2 (fn [key ref old new] (vswap! state conj {:key key :ref ref :old old :new new :tester 2}))
+                 err (fn [key ref old new]
+                       (throw (ex-info "test" {:key key :ref ref :old old :new new :tester :err})))
+                 update! (fn []
+                           (let [do-update (fn [x]
+                                             (try
+                                               (alter-var-root x inc)
+                                               (catch #?(:cljs :default
+                                                         :clj clojure.lang.ExceptionInfo
+                                                         :cljr clojure.lang.ExceptionInfo
+                                                         :lpy basilisp.lang.exception/ExceptionInfo
+                                                         :phel \phel\lang\ExInfoException) e
+                                                 (let [{:keys [old] :as data} (ex-data e)]
+                                                   (vswap! state conj data)))))]
+                             (do-update #'testvar-a)
+                             (do-update #'testvar-b)))
+                 keyed (fn [k s] (filter #(= k (:key %)) s))]
 
-    ;;          (update!)
-    ;;          (is (empty? @state))
+             (update!)
+             (is (empty? @state))
 
-    ;;          ;; add a watch to the vars
-    ;;          (is (= #'testvar-a (add-watch #'testvar-a :va tester1)))
-    ;;          (is (= #'testvar-b (add-watch #'testvar-b :vb tester1)))
-    ;;          (update!)
+             ;; add a watch to the vars
+             (is (= #'testvar-a (add-watch #'testvar-a :va tester1)))
+             (is (= #'testvar-b (add-watch #'testvar-b :vb tester1)))
+             (update!)
 
-    ;;          ;; add a second watch to the vars with a new key
-    ;;          (add-watch #'testvar-a :sa tester2)
-    ;;          (add-watch #'testvar-b :sb tester2)
-    ;;          (update!)
+             ;; add a second watch to the vars with a new key
+             (add-watch #'testvar-a :sa tester2)
+             (add-watch #'testvar-b :sb tester2)
+             (update!)
 
-    ;;          ;; replace the first watch by reusing the keys
-    ;;          (add-watch #'testvar-a :va tester2)
-    ;;          (add-watch #'testvar-b :vb tester2)
-    ;;          (update!)
+             ;; replace the first watch by reusing the keys
+             (add-watch #'testvar-a :va tester2)
+             (add-watch #'testvar-b :vb tester2)
+             (update!)
 
-    ;;          ;; check progress
-    ;;          (let [checkdata [{:key :va :ref #'testvar-a :old 1 :new 2 :tester 1}
-    ;;                           {:key :vb :ref #'testvar-b :old 11 :new 12 :tester 1}
+             ;; check progress
+             (let [checkdata [{:key :va :ref #'testvar-a :old 1 :new 2 :tester 1}
+                              {:key :vb :ref #'testvar-b :old 11 :new 12 :tester 1}
 
-    ;;                           {:key :va :ref #'testvar-a :old 2 :new 3 :tester 1}
-    ;;                           {:key :vb :ref #'testvar-b :old 12 :new 13 :tester 1}
-    ;;                           {:key :sa :ref #'testvar-a :old 2 :new 3 :tester 2}
-    ;;                           {:key :sb :ref #'testvar-b :old 12 :new 13 :tester 2}
+                              {:key :va :ref #'testvar-a :old 2 :new 3 :tester 1}
+                              {:key :vb :ref #'testvar-b :old 12 :new 13 :tester 1}
+                              {:key :sa :ref #'testvar-a :old 2 :new 3 :tester 2}
+                              {:key :sb :ref #'testvar-b :old 12 :new 13 :tester 2}
 
-    ;;                           {:key :va :ref #'testvar-a :old 3 :new 4 :tester 2}
-    ;;                           {:key :vb :ref #'testvar-b :old 13 :new 14 :tester 2}
-    ;;                           {:key :sa :ref #'testvar-a :old 3 :new 4 :tester 2}
-    ;;                           {:key :sb :ref #'testvar-b :old 13 :new 14 :tester 2}]]
-    ;;            (is (= (keyed :a checkdata) (keyed :a @state)))
-    ;;            (is (= (keyed :r checkdata) (keyed :r @state)))
-    ;;            (is (= (keyed :v checkdata) (keyed :v @state)))
+                              {:key :va :ref #'testvar-a :old 3 :new 4 :tester 2}
+                              {:key :vb :ref #'testvar-b :old 13 :new 14 :tester 2}
+                              {:key :sa :ref #'testvar-a :old 3 :new 4 :tester 2}
+                              {:key :sb :ref #'testvar-b :old 13 :new 14 :tester 2}]]
+               (is (= (keyed :a checkdata) (keyed :a @state)))
+               (is (= (keyed :r checkdata) (keyed :r @state)))
+               (is (= (keyed :v checkdata) (keyed :v @state)))
 
-    ;;            ;; add error watch
-    ;;            (add-watch #'testvar-a :e err)
-    ;;            (add-watch #'testvar-b :e err)
-    ;;            (update!)
+               ;; add error watch
+               (add-watch #'testvar-a :e err)
+               (add-watch #'testvar-b :e err)
+               (update!)
 
-    ;;            (is (contains? (set (keyed :e @state))
-    ;;                           {:key :e :ref #'testvar-a :old 4 :new 5 :tester :err}))
-    ;;            (is (contains? (set (keyed :e @state))
-    ;;                           {:key :e :ref #'testvar-b :old 14 :new 15 :tester :err})))))])
+               (is (contains? (set (keyed :e @state))
+                              {:key :e :ref #'testvar-a :old 4 :new 5 :tester :err}))
+               (is (contains? (set (keyed :e @state))
+                              {:key :e :ref #'testvar-b :old 14 :new 15 :tester :err})))))])
 
     #?(:cljs nil
        :lpy nil
