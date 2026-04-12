@@ -7,10 +7,13 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 - derive.cljc needs phel specific classes set up to test (`String` not existing)
 
-### Lacking features
+### Unimplemented and not reported so far
+Some maybe relevant, some not.
+
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
-- long.cljc: long is unimplemented and left out for now (not reported)
-- mod.cljc: unimplemented and not reported for now
+- long.cljc
+- mod.cljc
+- num.cljc
 
 ## Running
 
