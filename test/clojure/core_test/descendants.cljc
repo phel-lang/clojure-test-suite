@@ -4,9 +4,9 @@
 
 (when-var-exists descendants
 
-  ;; ; Some types for testing descendants by type
-  ;; (defprotocol TestDescendantsProtocol)
-  ;; (defrecord TestDescendantsRecord [] TestDescendantsProtocol)
+  ; Some types for testing descendants by type
+  (defprotocol TestDescendantsProtocol)
+  (defrecord TestDescendantsRecord [] TestDescendantsProtocol)
   ;; (deftype TestDescendantsType [] TestDescendantsProtocol)
 
   ;; ; A global hierarchy for testing `descendants tag` and `descendants h tag`
@@ -16,6 +16,7 @@
   ;;                        [::p-1 'ns/p-0]
   ;;                        [::p-2 ::root]
   ;;                        ['ns/p-0 ::root]])
+  ;; TODO PHP Fatal error:  Namespace declaration statement has to be the very first statement or after any declare call in the script in /tmp/phel/tmp/__phel_2a989b3b1ac004730d6a37b826c86b9e.php on line 23
 
   ;; (defn register-global-hierarchy []
   ;;   (doseq [[tag parent] global-hierarchy]
@@ -25,8 +26,8 @@
   ;;   (doseq [[tag parent] global-hierarchy]
   ;;     (underive tag parent)))
 
-  ;; ;; Basilisp does not support clojure.test style fixtures right now
-  ;; ;; https://github.com/basilisp-lang/basilisp/issues/1306
+  ;; Basilisp does not support clojure.test style fixtures right now
+  ;; https://github.com/basilisp-lang/basilisp/issues/1306
   ;; (defn with-global-hierarchy [#?@(:lpy [] :default [tests])]
   ;;   (register-global-hierarchy)
   ;;   #?(:lpy (yield) :default (tests))
