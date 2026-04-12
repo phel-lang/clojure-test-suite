@@ -73,8 +73,8 @@
           (is (contains? (set (keyed :e @state))
                          {:key :e :ref r :old 14 :new 15 :tester :err})))))
 
-    ;; TODO [PHEL001] Cannot resolve symbol 'alter-var-root'
     #?@(:cljs []
+        :phel []
         :default
         [(def testvar-a 0)
          (def testvar-b 10)
@@ -148,7 +148,7 @@
 
     #?(:cljs nil
        :lpy nil
-       :phel nil  ; TODO phel ref support?
+       :phel nil
        :default
        (testing "watch ref"
          (let [state (volatile! [])
