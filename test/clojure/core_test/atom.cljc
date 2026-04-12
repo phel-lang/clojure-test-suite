@@ -125,7 +125,7 @@
                  (and (= v (deref the-atom))
                       #?(:cljs (is (satisfies? cljs.core/IAtom the-atom))
                          :clj (is (instance? clojure.lang.Atom the-atom)))))
-        ;; 'sym  ;; TODO disabled due to Cannot resolve symbol 'the-atom'
+        'sym  ;; TODO disabled due to Cannot resolve symbol 'the-atom'
         ;; `sym
         ;; "string"
         ;; 1
