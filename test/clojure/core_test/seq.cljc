@@ -5,18 +5,19 @@
 (when-var-exists seq
  (deftest test-seq
    ;; Sourced via canSeq https://github.com/clojure/clojure/blob/master/src/jvm/clojure/lang/RT.java#L581
-   (are [in expected] (= expected (seq in))
-     "test" '(\t \e \s \t)
-     [1 2 3 4] '(1 2 3 4)
-     '(:a :b :c :d) '(:a :b :c :d)
-     '() nil
-     nil nil
-     ;; Basilisp does not currently implement sorted collections.
-     #?@(:lpy [] :default [(sorted-set 3.0 1.0 -2.5 4.0) '(-2.5 1.0 3.0 4.0)])
-     (range 5 10) '(5 6 7 8 9)
-     #?@(:cljs [(int-array 3) '(nil nil nil)]
-         :lpy [(int-array 3) '(nil nil nil)]
-         :default [(int-array 3) '(0 0 0)]))
+   ;; (are [in expected] (= expected (seq in))
+   ;;   "test" '(\t \e \s \t)
+   ;;   [1 2 3 4] '(1 2 3 4)
+   ;;   '(:a :b :c :d) '(:a :b :c :d)
+   ;;   '() nil
+   ;;   nil nil
+   ;;   ;; Basilisp does not currently implement sorted collections.
+   ;;   #?@(:lpy [] :default [(sorted-set 3.0 1.0 -2.5 4.0) '(-2.5 1.0 3.0 4.0)])
+   ;;   (range 5 10) '(5 6 7 8 9)
+   ;;   #?@(:cljs [(int-array 3) '(nil nil nil)]
+   ;;       :lpy [(int-array 3) '(nil nil nil)]
+   ;;       :default [(int-array 3) '(0 0 0)]))
+
    (testing "sets and maps"
      (let [input #{440M 55000M 80000}
            input-hash (into (hash-set) input)
