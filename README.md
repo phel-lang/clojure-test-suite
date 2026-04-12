@@ -1,7 +1,8 @@
 # Phel experimentation for clojure-test-suite
 
-Most tests are removed from the upstream repo and are added back later as things are confirmed working.
-Files may have Phel specific edits that eventually would be submitted to upstream.
+Some tests have Phel specific modifications, most prominently for missing rational numbers.
+There's also some reader errors and missing functions on Phel side at the moment.
+Phel specific modifications will be copied cleanly over to upstream main branch and submitted there after things are settled.
 
 ## Test notes
 
