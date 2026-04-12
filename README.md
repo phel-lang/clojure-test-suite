@@ -15,6 +15,7 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 Some maybe relevant, some not.
 
 - subs.cljc could be useful https://clojuredocs.org/clojure.core/subs
+- subvec.cljc similarly for arrays https://clojuredocs.org/clojure.core/subvec
 
 - star_squote, arbitrary precision multiplication (https://clojuredocs.org/clojure.core/*')
 
