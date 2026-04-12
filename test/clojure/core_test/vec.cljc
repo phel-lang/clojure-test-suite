@@ -29,7 +29,7 @@
        :default (testing "array aliasing"
                   ;; (let [arr (to-array [1 2 3]), v (vec arr)]
                   ;;   (is (= [1 2 3] v))
-                  ;;   (aset arr 0 -1)
+                  ;;   (aset arr 0 -1)  ;; TODO aset is missing
                   ;;   (is (= [-1 2 3] v)))
                   ))
 
