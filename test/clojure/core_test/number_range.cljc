@@ -28,6 +28,7 @@
 (def ^:const max-double #?(:clj Double/MAX_VALUE
                            :cljr Double/MaxValue
                            :cljs js/Number.MAX_VALUE
+                           :phel php/PHP_FLOAT_MAX
                            :lpy (.-max sys/float-info)
                            :jank (#cpp (:member (std.numeric_limits jank.f64) max))
                            :default 1.7976931348623157e+308))
@@ -35,6 +36,7 @@
 (def ^:const min-double #?(:clj Double/MIN_VALUE
                            :cljr Double/Epsilon ; NOTE: definitely not Double/MinValue -- ouch!
                            :cljs js/Number.MIN_VALUE
+                           :phel php/PHP_FLOAT_MIN
                            :lpy (.-min sys/float_info)
                            :jank (#cpp (:member (std.numeric_limits jank.f64) min))
                            :default 4.9e-324))
