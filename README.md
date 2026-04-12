@@ -5,7 +5,9 @@ Files may have Phel specific edits that eventually would be submitted to upstrea
 
 ## Test notes
 
-- derive.cljc needs phel specific classes set up to test (`String` not existing)
+### Need Phel compatibility modifications
+- reduce.cljc
+- derive.cljc (`String` not existing)
 
 ### Unimplemented and not reported so far
 Some maybe relevant, some not.
