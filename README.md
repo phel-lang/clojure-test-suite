@@ -22,6 +22,7 @@ Some maybe relevant, some not.
 
 - decimal_qmark.cljc function is about BigDecimal, should it be "supported" or not? Could validate for float.
 - unsigned-bit-shift-right (datatype not in PHP?)
+- with_precision.cljc
 
 - mod.cljc
 - num.cljc
