@@ -1,8 +1,6 @@
 (ns clojure.core-test.add-watch
   (:require [clojure.test :as t :refer [deftest is testing]]
-            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists sleep]])
-  ;; Phel doesn't support FQN without Clojure compatible backslash-free syntax (\Phel\Lang\ExInfoException)
-  #?(:phel (:use Phel.Lang.ExInfoException)))
+            [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists sleep]]))
 
 (when-var-exists add-watch
   (deftest test-add-watch
@@ -23,7 +21,7 @@
                                                     :clj clojure.lang.ExceptionInfo
                                                     :cljr clojure.lang.ExceptionInfo
                                                     :lpy basilisp.lang.exception/ExceptionInfo
-                                                    :phel ExInfoException) e
+                                                    :phel Phel.Lang.ExInfoException) e
                                             (let [data (ex-data e)]
                                               (vswap! state conj data)))))]
                         (do-update a)

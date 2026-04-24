@@ -1,7 +1,7 @@
 (ns clojure.core-test.realized-qmark
   (:require [clojure.test :as t :refer [deftest is testing]]
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists sleep] :as p]
-            #?(:phel [phel\async :refer [future-cancel]])
+            #?(:phel [phel.async :refer [future-cancel]])
             )
 
   )
