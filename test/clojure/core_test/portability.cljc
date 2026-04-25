@@ -68,7 +68,7 @@
          (report-failure# failure-opts#)
          (catch #?(:jank ~'jank.runtime.object_ref
                    :clj ~'Throwable
-                   :phel ~'Throwable  ; TODO Can not resolve type Throwable
+                   :phel ~'Throwable
                    :default ~'Exception) e#
            (report-success# (success-opts# e#))
            e#)
