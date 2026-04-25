@@ -168,7 +168,7 @@ jobs:
     strategy:
       fail-fast: false  # TODO should be true (default) for CI?
       matrix:
-        php: [ '8.4']  # , '8.5' TODO
+        php: ['8.4', '8.5']
     steps:
       - uses: actions/checkout@v4
 
