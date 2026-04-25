@@ -5,13 +5,8 @@
 (when-var-exists ancestors
 
   ;; Some classes for testing ancestors by type inheritance
-
-  ;; TODO Undefined constant "ArrayIterator"  ; https://github.com/phel-lang/phel-lang/issues/1560
-  ;; (def AncestorT #?(:cljs js/Object :lpy python/object :phel ArrayIterator :default Object))
-  ;; (def ChildT #?(:cljs :default :lpy basilisp.lang.set/PersistentSet :phel RecursiveArrayIterator :default clojure.lang.PersistentHashSet))
-
-  (def AncestorT #?(:cljs js/Object :lpy python/object :phel :ArrayIterator :default Object))
-  (def ChildT #?(:cljs :default :lpy basilisp.lang.set/PersistentSet :phel :RecursiveArrayIterator :default clojure.lang.PersistentHashSet))
+  (def AncestorT #?(:cljs js/Object :lpy python/object :phel nil :default Object))
+  (def ChildT #?(:cljs :default :lpy basilisp.lang.set/PersistentSet :phel nil :default clojure.lang.PersistentHashSet))
 
   ; Some custom types for testing ancestors by type inheritance
   (defprotocol TestAncestorsProtocol)
