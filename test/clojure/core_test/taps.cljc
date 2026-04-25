@@ -1,7 +1,6 @@
 (ns clojure.core-test.taps
   (:require [clojure.test :as t :refer [deftest is]]
             #?(:cljs [cljs.test :refer-macros [async]])
-            #?(:phel [phel.async :refer [deliver promise]])  ; TODO https://github.com/phel-lang/phel-lang/issues/1548
             [clojure.core-test.portability #?(:cljs :refer-macros :default :refer) [when-var-exists]]))
 
 (when-var-exists add-tap

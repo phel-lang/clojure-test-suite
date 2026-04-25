@@ -2,7 +2,7 @@
   #?(:lpy (:import time))
   (:require #?(:cljs [cljs.test :as t]
                :default [clojure.test :as t])
-            #?(:phel [phel.async :as amphp])))
+            #?(:phel [phel.async])))
 
 (defmacro when-var-exists [var-sym & body]
   (let [cljs? (some? (:ns &env))
@@ -29,7 +29,7 @@
       :cljs #(js/setTimeout identity %)
       :clj Thread/sleep
       :lpy time/sleep
-      :phel #(amphp/delay (/ % 1000)))
+      :phel #(phel.async/delay (/ % 1000)))
    ms))
 
 ;; --- Portable exception multimethod. ---
