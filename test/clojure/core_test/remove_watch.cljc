@@ -211,5 +211,4 @@
            ;; Check to make sure nothing was added
            (is (= @messages #{{:key :key1 :ref watchable :old 0 :new 1 :watcher :watcher1}
                               {:key :key2 :ref watchable :old 0 :new 1 :watcher :watcher2}
-                              {:key :key2 :ref watchable :old 1 :new 2 :watcher :watcher2}})))))
-    ))
+                              {:key :key2 :ref watchable :old 1 :new 2 :watcher :watcher2}})))))))
