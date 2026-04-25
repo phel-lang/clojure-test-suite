@@ -88,7 +88,7 @@
                   (reduce + arange)
                   (reduce + avec)
                   #?(:bb 4950
-                     :phel 4950  ; TODO
+                     :phel 4950
                      :clj (.reduce ^IReduce avec +))
                   (reduce + alist)
                   (reduce + obj-array)
