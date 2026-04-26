@@ -10,6 +10,8 @@
       true "0"
       true "1"
       true "-1"
+      ; Phel/PHP lacks class type and classes are are represented as strings
+      #?@(:phel [true stdClass])
 
       false 0
       false 1
