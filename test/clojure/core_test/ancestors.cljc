@@ -143,11 +143,11 @@
 
       #?(:bb      "bb doesn't report ancestors by type inheritance for custom types"
          :cljs    "cljs doesn't report ancestors by type inheritance yet (CLJS-3464)"
-         :phel    "TODO test with Phel.Lang.Collections.Map.PersistentMapInterface / TestAncestorsProtocol ?"
+         ;;:phel    "TODO test with Phel.Lang.Collections.Map.PersistentMapInterface / TestAncestorsProtocol ?"
          :default (testing "returns ancestors by type inheritance when tag is a custom type, whether the tag is in h or not"
                     (are [h tag] (let [actual-ancestors (ancestors h tag)]
-                                   (and (contains? actual-ancestors #?(:lpy (:interface TestAncestorsProtocol) :phel  :default clojure.core_test.ancestors.TestAncestorsProtocol))
-                                        (contains? actual-ancestors #?(:lpy basilisp.lang.interfaces/IAssociative :default clojure.lang.Associative))))
+                                   (and (contains? actual-ancestors #?(:lpy (:interface TestAncestorsProtocol) :phel TestAncestorsProtocol :default clojure.core_test.ancestors.TestAncestorsProtocol))
+                                        (contains? actual-ancestors #?(:lpy basilisp.lang.interfaces/IAssociative :phel Phel.Lang.Collections.Map.PersistentMapInterface :default clojure.lang.Associative))))
                                  ; tag in h
                                  datatypes TestAncestorsRecord
                                  ; tag not in h
