@@ -46,10 +46,12 @@
       '= '=
       '= :=
       'abc*+!-_'?<>= "abc*+!-_'?<>="
-      #?(:cljs 'cljs.core/+
-         :lpy 'basilisp.core/+
-         :phel 'phel.core/+
-         :default 'clojure.core/+) #'+)
+      #?@(:phel []  ; Phel does not support vars yet
+          :default
+          [#?(:cljs 'cljs.core/+
+              :lpy 'basilisp.core/+
+              :phel #'+
+              :default 'clojure.core/+) #'+]))
 
     (are [expected ns name] (= expected (symbol ns name))
       'abc/abc     "abc"     "abc"
