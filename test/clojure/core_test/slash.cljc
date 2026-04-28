@@ -136,6 +136,8 @@
 
     #?(:cljs
        nil
+       :phel
+       nil
 
        :default
        (testing "rationals"
