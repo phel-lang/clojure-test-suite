@@ -106,6 +106,8 @@
 
     #?(:cljs
        nil ; CLJS doesn't support ratios
+       :phel
+       nil
 
        :default
        (testing "rationals"
