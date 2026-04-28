@@ -1,5 +1,5 @@
 {
     "require": {
-        "phel-lang/phel-lang": "dev-main#0dde915"
+        "phel-lang/phel-lang": "dev-feat/test-report-improvement#cc6d6d3"
     }
 }

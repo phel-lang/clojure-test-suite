@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06de4dfc089c4956ec9f7bf9cedf988b",
+    "content-hash": "74756009ca185c147063652124cfa75c",
     "packages": [
         {
             "name": "amphp/amp",
@@ -242,16 +242,16 @@
         },
         {
             "name": "phel-lang/phel-lang",
-            "version": "dev-main",
+            "version": "dev-feat/test-report-improvement",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phel-lang/phel-lang.git",
-                "reference": "0dde915"
+                "reference": "cc6d6d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/0dde915",
-                "reference": "0dde915",
+                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/cc6d6d3",
+                "reference": "cc6d6d3",
                 "shasum": ""
             },
             "require": {
@@ -273,7 +273,6 @@
                 "symfony/var-dumper": "^7.4",
                 "vimeo/psalm": "^6.16"
             },
-            "default-branch": true,
             "bin": [
                 "bin/phel"
             ],
@@ -311,7 +310,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phel-lang/phel-lang/issues",
-                "source": "https://github.com/phel-lang/phel-lang/tree/main"
+                "source": "https://github.com/phel-lang/phel-lang/tree/feat/test-report-improvement"
             },
             "funding": [
                 {
@@ -319,7 +318,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-27T22:08:58+00:00"
+            "time": "2026-04-28T06:51:48+00:00"
         },
         {
             "name": "psr/container",
