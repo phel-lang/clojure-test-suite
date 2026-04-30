@@ -1,46 +1,51 @@
 # Running the Phel tests
 
-## Pre-requisities
+## Prerequisites
 
 - PHP 8.4+ & [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 
-Install Phel:
+Install:
 ```
 composer install
 ```
+
+Tests live in `test/` (override via `phel-config.php`).
 
 See also [Getting Started guide](https://phel-lang.org/documentation/getting-started/).
 
 ## Running the test suite
 
-Run full suite:
+Full suite:
 ```
 ./vendor/bin/phel test
 ```
-Run specific test:
+Specific test:
 ```
 ./vendor/bin/phel test test/clojure/core_test/abs.cljc
 ```
 
-If test runner crashes before producing a report, run the tests with more verbosity using `--testdox` or `-v` flag which may help tracking down the specific test where failure is coming from.
+If runner crashes before report, re-run with `--testdox` or `-v` to locate failing test.
 
-See also Phel testing docs on [running tests](https://phel-lang.org/documentation/testing/#running-tests).
+See [Phel testing docs](https://phel-lang.org/documentation/testing/#running-tests).
 
 ## Updating Phel version
 
-Specific [Phel repository](https://github.com/phel-lang/phel-lang/) commit hash is pinned in `composer.json`:
-```javascript
+`composer.json` tracks `dev-main` (latest [phel-lang](https://github.com/phel-lang/phel-lang/) HEAD):
+```json
 {
     "require": {
-        "phel-lang/phel-lang": "dev-main#73920b1"
-    }
+        "phel-lang/phel-lang": "dev-main"
+    },
+    "minimum-stability": "dev"
 }
 ```
 
-It can be changed manually and updated to with `composer update`.
-
-Alternatively `composer require` changes the pinned version in `composer.json` and updates packages automatically:
-
+Pull latest:
 ```
-composer require "phel-lang/phel-lang:dev-main#73920b1"
+composer update phel-lang/phel-lang
+```
+
+Pin specific commit (optional):
+```
+composer require "phel-lang/phel-lang:dev-main#<commit-hash>"
 ```

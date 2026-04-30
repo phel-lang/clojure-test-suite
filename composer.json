@@ -1,5 +1,6 @@
 {
     "require": {
-        "phel-lang/phel-lang": "dev-main#31c04fd"
-    }
+        "phel-lang/phel-lang": "dev-main"
+    },
+    "minimum-stability": "dev"
 }
