@@ -1,5 +1,5 @@
 {
     "require": {
-        "phel-lang/phel-lang": "dev-main#c3d9eb8"
+        "phel-lang/phel-lang": "dev-fix/1791-ancestors-protocol-inheritance"
     }
 }

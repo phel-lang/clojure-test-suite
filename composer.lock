@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88c4807f50f61866aed1e0078b0ae133",
+    "content-hash": "cb573d99a90f7c9096bf6956e2788c32",
     "packages": [
         {
             "name": "amphp/amp",
@@ -242,16 +242,16 @@
         },
         {
             "name": "phel-lang/phel-lang",
-            "version": "dev-main",
+            "version": "dev-fix/1791-ancestors-protocol-inheritance",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phel-lang/phel-lang.git",
-                "reference": "c3d9eb8d0d186b9e50381f564cf477b737e70e69"
+                "reference": "17338a98ca531306365508a5b95b1ac08ae2acea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/c3d9eb8d0d186b9e50381f564cf477b737e70e69",
-                "reference": "c3d9eb8d0d186b9e50381f564cf477b737e70e69",
+                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/17338a98ca531306365508a5b95b1ac08ae2acea",
+                "reference": "17338a98ca531306365508a5b95b1ac08ae2acea",
                 "shasum": ""
             },
             "require": {
@@ -273,7 +273,6 @@
                 "symfony/var-dumper": "^7.4",
                 "vimeo/psalm": "^6.16"
             },
-            "default-branch": true,
             "bin": [
                 "bin/phel"
             ],
@@ -311,7 +310,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phel-lang/phel-lang/issues",
-                "source": "https://github.com/phel-lang/phel-lang/tree/main"
+                "source": "https://github.com/phel-lang/phel-lang/tree/fix/1791-ancestors-protocol-inheritance"
             },
             "funding": [
                 {
@@ -319,7 +318,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-29T18:54:46+00:00"
+            "time": "2026-04-29T21:47:07+00:00"
         },
         {
             "name": "psr/container",
