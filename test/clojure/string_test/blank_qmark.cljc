@@ -10,10 +10,8 @@
     (is (true? (str/blank? nil)))
     (is (false? (str/blank? "֎")))
     (testing "U+2007"
-      (is (#?(:cljs true? :cljr true? :lpy true? :phel true? :default false?) (str/blank? " ")))
-      ;; Phel doesn't support unicode characters withing strings
-      ;; https://github.com/phel-lang/phel-lang/issues/1679
-      (is (#?(:cljs true? :cljr true? :lpy true? :phel false? :default false?) (str/blank? "\u2007"))))
+      (is (#?(:cljs true? :cljr true? :lpy true? :default false?) (str/blank? " ")))
+      (is (#?(:cljs true? :cljr true? :lpy true? :default false?) (str/blank? "\u2007"))))
     (is (true? (str/blank? "  ")))
     (is (true? (str/blank? " \t ")))
     #?(:cljs (do (is (true? (str/blank? (symbol ""))))
