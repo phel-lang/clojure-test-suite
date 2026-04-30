@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb573d99a90f7c9096bf6956e2788c32",
+    "content-hash": "4faa13342f516e990e61532911529448",
     "packages": [
         {
             "name": "amphp/amp",
@@ -242,16 +242,16 @@
         },
         {
             "name": "phel-lang/phel-lang",
-            "version": "dev-fix/1791-ancestors-protocol-inheritance",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phel-lang/phel-lang.git",
-                "reference": "17338a98ca531306365508a5b95b1ac08ae2acea"
+                "reference": "31c04fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/17338a98ca531306365508a5b95b1ac08ae2acea",
-                "reference": "17338a98ca531306365508a5b95b1ac08ae2acea",
+                "url": "https://api.github.com/repos/phel-lang/phel-lang/zipball/31c04fd",
+                "reference": "31c04fd",
                 "shasum": ""
             },
             "require": {
@@ -273,6 +273,7 @@
                 "symfony/var-dumper": "^7.4",
                 "vimeo/psalm": "^6.16"
             },
+            "default-branch": true,
             "bin": [
                 "bin/phel"
             ],
@@ -310,7 +311,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phel-lang/phel-lang/issues",
-                "source": "https://github.com/phel-lang/phel-lang/tree/fix/1791-ancestors-protocol-inheritance"
+                "source": "https://github.com/phel-lang/phel-lang/tree/main"
             },
             "funding": [
                 {
@@ -318,7 +319,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-04-29T21:47:07+00:00"
+            "time": "2026-04-30T06:54:15+00:00"
         },
         {
             "name": "psr/container",
