@@ -25,8 +25,8 @@
                -1.0
                ##NaN
                ##Inf
-               ;; Phel UUID's are strings
-               #?(:phel nil :default "f81d4fae-7dec-11d0-a765-00a0c91e6bf6")
+               #?(:phel nil ; Phel UUID's are strings
+                  :default "f81d4fae-7dec-11d0-a765-00a0c91e6bf6")
                {:a :map}
                #{:a-set}
                [:a :vector]

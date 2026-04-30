@@ -50,7 +50,6 @@
           :default
           [#?(:cljs 'cljs.core/+
               :lpy 'basilisp.core/+
-              :phel #'+
               :default 'clojure.core/+) #'+]))
 
     (are [expected ns name] (= expected (symbol ns name))

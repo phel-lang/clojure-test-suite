@@ -2,6 +2,7 @@
   #?(:lpy (:import time))
   (:require #?(:cljs [cljs.test :as t]
                :default [clojure.test :as t])
+            ;; TODO https://github.com/phel-lang/phel-lang/issues/1805
             #?(:phel [phel.async])))
 
 (defmacro when-var-exists [var-sym & body]

@@ -14,7 +14,9 @@
 (when-var-exists defprotocol
   (defprotocol MyProtocol))
 
-#?(:phel nil  ; Phel's var? https://github.com/phel-lang/phel-lang/issues/1717
+;; Phel's doesn't have vars yet but it has irrelevant `var?` function (deprecated)
+;; https://github.com/phel-lang/phel-lang/issues/1717
+#?(:phel nil
    :default
    (when-var-exists var?
      (deftest test-var?
@@ -56,7 +58,8 @@
            "abc"
            999
            1.2
-           #?@(:cljs [], ; most Clojure dialects support ratios - not CLJS
+           #?@(:cljs [] ; most Clojure dialects support ratios - not CLJS or Phel
+               :phel []
                :default [2/3])
            \backspace
            nil

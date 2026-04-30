@@ -20,9 +20,8 @@
       false #{:a :b}
       false "ab"
 
-      ;; https://github.com/phel-lang/phel-lang/issues/1739#issuecomment-4338423558
-      #?@(:phel [true (seq "ab")
-                 true (to-array [1 2 3])]  ; PHP array is associative
+      #?@(:phel [true (seq "ab") ; PHP arrays are associative
+                 true (to-array [1 2 3])]
           :default
           [false (seq "ab")                  ; seq
            false (to-array [1 2 3])])
