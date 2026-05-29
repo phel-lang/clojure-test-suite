@@ -59,10 +59,7 @@
                                #{1 2 3 4} (conj! (transient #{1 2}) 3) 4)))
 
     ;; Basilisp does not prevent continuing to use transient vectors after persistent! call
-    ;; Phel likewise does not invalidate a transient after `persistent!`, so
-    ;; `conj!` keeps working instead of throwing. Documented divergence.
     #?@(:lpy []
-        :phel []
         :default
         [(testing "cannot conj! after call to persistent!"
            (let [coll (transient []), _ (persistent! coll)]
