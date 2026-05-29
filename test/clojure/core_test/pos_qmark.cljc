@@ -36,10 +36,17 @@
            true  1/2
            false -1/2]))
 
+    ;; Phel's `pos?` rejects nil (like the JVM) but coerces the booleans
+    ;; false/true numerically to 0/1 (false => not positive, true => positive)
+    ;; instead of throwing. Documented divergence.
     #?@(:cljs
         [(is (not (pos? nil)))
          (is (not (pos? false))) ; Prints warning
          (is (pos? true))] ; Prints warning
+        :phel
+        [(is (p/thrown? (pos? nil)))
+         (is (not (pos? false)))
+         (is (pos? true))]
         :lpy
         [(is (p/thrown? (pos? nil)))
          (is (not (pos? false)))

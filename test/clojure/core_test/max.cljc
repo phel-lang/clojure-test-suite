@@ -45,6 +45,13 @@
         [(is (= 1 (max nil 1)))
          (is (= 1 (max 1 nil)))]
         
+        ;; Phel's `max` is lenient on strings: it uses PHP comparison so they
+        ;; compare lexicographically ("y" > "x") instead of throwing. `nil` is
+        ;; rejected (like the JVM). Documented divergence.
+        :phel
+        [(is (= "y" (max "x" "y")))
+         (is (p/thrown? (max nil 1)))
+         (is (p/thrown? (max 1 nil)))]
         :default
         [(is (p/thrown? (max "x" "y")))
          (is (p/thrown? (max nil 1)))

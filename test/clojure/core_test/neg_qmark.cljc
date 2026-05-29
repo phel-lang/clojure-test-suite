@@ -32,7 +32,15 @@
            false 1/2
            true  -1/2]))
 
-    #?@(:lpy
+    ;; Phel divergence: `neg?` rejects nil (like the JVM) but coerces the
+    ;; booleans false/true numerically to 0/1, so both are non-negative
+    ;; (=> false) instead of throwing.
+    #?@(:phel
+        [(is (p/thrown? (neg? nil)))
+         (is (not (neg? false)))
+         (is (not (neg? true)))]
+
+        :lpy
         [(is (p/thrown? (neg? nil)))
          (is (not (neg? false)))
          (is (not (neg? true)))]
