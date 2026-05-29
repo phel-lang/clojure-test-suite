@@ -113,7 +113,9 @@
         1.0M  -1.0M -1.0M)
 
       ;; Zero arg
+      ;; Phel divergence: (/) with no args is lenient, returning the identity 1.
       #?(:cljs nil
+         :phel (is (= 1 (/)))
          :default (is (p/thrown? (/))))
 
       ;; Single arg

@@ -19,7 +19,12 @@
      (double -1.0) -1.0M)
    (is (NaN? (double ##NaN)))
 
-   #?@(:cljr
+   ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+   #?@(:phel
+       [(is (= 0.0 (double "0")))
+        (is (p/thrown? (double :0)))]
+
+       :cljr
        [(is (= 0.0 (double "0")))
         (is (p/thrown? (double :0)))]
 

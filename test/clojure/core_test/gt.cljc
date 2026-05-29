@@ -92,12 +92,19 @@
       ;; JavaScript under the hood) where comparisons are just a bit
       ;; of a mess. CLR also has some implicit conversions for strings
       ;; and characters to numbers.
-      #?@(:cljr
+      ;; Phel divergence: nil/mixed-type comparison returns a bool; compare on collections returns 0; peek is structural.
+      #?@(:phel
+          [(is (= true (> 1 nil)))
+           (is (= false (> nil 1)))
+           (is (= false (> 1 nil 2)))
+           (is (= true (> 2 1 nil)))]
+
+          :cljr
           [(is (p/thrown? (> 1 nil)))
            (is (p/thrown? (> nil 1)))
            (is (p/thrown? (> 1 nil 2)))
            (is (p/thrown? (> 2 1 nil)))]
-          
+
           :lpy
           [(is (p/thrown? (> 1 nil)))
            (is (p/thrown? (> nil 1)))

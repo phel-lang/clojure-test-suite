@@ -7,7 +7,10 @@
     (is (= false (contains? nil nil)))
     (is (= false (contains? {} nil)))
     (is (= false (contains? [] nil)))
-    #?(:lpy (is (= true (contains? "abc" "a")))
+    ;; Phel divergence: contains? on a string treats the 2nd arg as an index key, so a
+    ;; non-integer like "a" is simply absent — returns false instead of throwing.
+    #?(:phel (is (= false (contains? "abc" "a")))
+       :lpy (is (= true (contains? "abc" "a")))
        :cljs (is (= false (contains? "abc" "a")))
        :default (is (p/thrown? (contains? "abc" "a"))))
 

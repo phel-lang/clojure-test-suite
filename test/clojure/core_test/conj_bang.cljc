@@ -59,7 +59,11 @@
                                #{1 2 3 4} (conj! (transient #{1 2}) 3) 4)))
 
     ;; Basilisp does not prevent continuing to use transient vectors after persistent! call
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). conj! after persistent! mutates/returns instead of
+    ;; throwing, so skip like :lpy.
     #?@(:lpy []
+        :phel []
         :default
         [(testing "cannot conj! after call to persistent!"
            (let [coll (transient []), _ (persistent! coll)]
@@ -69,7 +73,13 @@
       (are [coll x] (p/thrown? (conj! coll x))
         ;; Basilisp is fairly liberal with its coercion to map entry, meaning
         ;; that many two element sequences can be conj'd to a map.
+        ;; Phel divergence: like Basilisp it coerces a two-element list to a map
+        ;; entry, so (conj! (transient {}) '(:a 1)) returns a value instead of
+        ;; throwing; skip that case. Phel still throws on the set and range cases.
         #?@(:lpy []
+            :phel
+            [(transient {}) #{:a 1}
+             (transient {}) (range 2)]
             :default
             [(transient {}) '(:a 1)
              (transient {}) #{:a 1}

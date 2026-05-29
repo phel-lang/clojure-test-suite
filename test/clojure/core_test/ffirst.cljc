@@ -21,7 +21,15 @@
       (is (= \a (ffirst #{"abcd"}))))
 
     (testing "exceptions"
-      #?@(:cljs
+      ;; Phel divergence: empty?/last/ffirst/fnext nil-safe + structural.
+      ;; ffirst on a seq of scalars: first elem isn't seqable, so (first scalar) throws;
+      ;; on a seq of ints, (range 0 10)/(range) yield nil (nil-safe first-of-first).
+      #?@(:phel
+          [(is (= nil (ffirst (range 0 10))))
+           (is (= nil (ffirst (range)))) ; infinite lazy seq
+           (is (p/thrown? (ffirst [:a :b :c])))
+           (is (p/thrown? (ffirst '(:a :b :c))))]
+          :cljs
           [(is (p/thrown? (ffirst (range 0 10))))
            (is (p/thrown? (ffirst (range)))) ; infinite lazy seq
            (is (p/thrown? (ffirst [:a :b :c])))

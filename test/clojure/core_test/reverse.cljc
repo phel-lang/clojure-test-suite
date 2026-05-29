@@ -13,7 +13,11 @@
       (is (= '([4 5] 3 2 1) (reverse [1 2 3 [4 5]])))
       (is (= '(\c \b \a) (reverse "abc")))
       (is (= '([:a :b]) (reverse {:a :b})))
-      #?@(:lpy [(is (= '(\a) (reverse \a)))
+      ;; Phel divergence: a char is a 1-char string (seqable), so reverse is lenient over it.
+      #?@(:phel [(is (= '(\a) (reverse \a)))
+                 (is (p/thrown? (reverse 0)))
+                 (is (p/thrown? (reverse 0.0)))]
+          :lpy [(is (= '(\a) (reverse \a)))
                 (is (p/thrown? (reverse 0)))
                 (is (p/thrown? (reverse 0.0)))]
           :cljs [(is (= '(\a) (reverse \a)))

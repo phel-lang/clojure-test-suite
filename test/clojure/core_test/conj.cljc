@@ -37,7 +37,9 @@
                     ;; Basilisp is fairly liberal with its coercion to map entry,
                     ;; meaning that many two element sequences can be conj'ed to
                     ;; a map.
-                    #?@(:lpy [(is (= {:a 0 :b 1} (conj {:a 0} '(:b 1))))]
+                    ;; Phel divergence: conj coerces a 2-element seq into a map entry.
+                    #?@(:phel [(is (= {:a 0 :b 1} (conj {:a 0} '(:b 1))))]
+                        :lpy [(is (= {:a 0 :b 1} (conj {:a 0} '(:b 1))))]
                         :default [(is (p/thrown? (conj {:a 0} '(:b 1))))])]))
 
     (testing "meta preservation"

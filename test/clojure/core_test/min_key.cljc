@@ -111,21 +111,37 @@
              nil identity  [nil nil]]
             :default [])))
 
+    ;; Phel divergence: key/val nil-safe + structural; realized? true for non-pending; min-key works on any Comparable.
     (testing "negative cases"
+      ;; nil keyfn throws (raw Error: null is not callable) in every dialect.
       (are [f col] (p/thrown? (apply min-key f col))
         nil [1 2]
-        nil [2 1 3]
-        #?@(:lpy
-            [identity [{:val 1} {:val 2}]
-             identity [{:val 2} {:val 1} {:val 3}]]
-            :cljs
-            []
-            :default
-            [identity ["x" "y"]
-             identity ["y" "x" "z"]
-             identity [[1] [2]]
-             identity [[2] [1] [3]]
-             identity [{:val 1} {:val 2}]
-             identity [{:val 2} {:val 1} {:val 3}]
-             identity [#{1} #{2}]
-             identity [#{2} #{1} #{3}]])))))
+        nil [2 1 3])
+      #?(:phel
+         ;; Phel does NOT throw: min-key works on any Comparable
+         ;; (strings/vectors/maps/sets compare structurally).
+         (are [expected f col] (= expected (apply min-key f col))
+           "x" identity ["x" "y"]
+           "x" identity ["y" "x" "z"]
+           [1] identity [[1] [2]]
+           [1] identity [[2] [1] [3]]
+           {:val 1} identity [{:val 1} {:val 2}]
+           {:val 1} identity [{:val 2} {:val 1} {:val 3}]
+           #{1} identity [#{1} #{2}]
+           #{1} identity [#{2} #{1} #{3}])
+         :default
+         (are [f col] (p/thrown? (apply min-key f col))
+           #?@(:lpy
+               [identity [{:val 1} {:val 2}]
+                identity [{:val 2} {:val 1} {:val 3}]]
+               :cljs
+               []
+               :default
+               [identity ["x" "y"]
+                identity ["y" "x" "z"]
+                identity [[1] [2]]
+                identity [[2] [1] [3]]
+                identity [{:val 1} {:val 2}]
+                identity [{:val 2} {:val 1} {:val 3}]
+                identity [#{1} #{2}]
+                identity [#{2} #{1} #{3}]]))))))

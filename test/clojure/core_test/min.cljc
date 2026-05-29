@@ -36,7 +36,15 @@
     (is (NaN? (min ##-Inf ##NaN ##Inf)))
     (is (NaN? (min ##NaN)))
 
-    #?@(:lpy
+    ;; Phel divergence: reducer lenient on bad input; min uses lenient `<`
+    ;; comparison, so strings compare structurally and nil sorts below numbers
+    ;; instead of throwing (Bucket A/B, #2223).
+    #?@(:phel
+        [(is (= "x" (min "x" "y")))
+         (is (nil? (min nil 1)))
+         (is (nil? (min 1 nil)))]
+
+        :lpy
         [(is (= "x" (min "x" "y")))
          (is (p/thrown? (min nil 1)))
          (is (p/thrown? (min 1 nil)))]
@@ -44,7 +52,7 @@
         :cljs
         [(is (nil? (min nil 1)))                            ; nil acts like zero
          (is (nil? (min 1 nil)))]
-        
+
         :default
         [(is (p/thrown? (min "x" "y")))
          (is (p/thrown? (min nil 1)))

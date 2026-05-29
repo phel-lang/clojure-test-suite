@@ -15,7 +15,11 @@
     ;; `nth` throws if out of range
     (is (p/thrown? (nth [0 1 2] 10)))
     (is (p/thrown? (nth [0 1 2] nil)))
-    #?@(:lpy
+    ;; Phel divergence: nth nil-safe on nil coll — (nth nil nil) returns nil instead of throwing.
+    #?@(:phel
+        [(is (p/thrown? (nth [0 1 2] -1)))
+         (is (nil? (nth nil nil)))]
+        :lpy
         [(is (= 2 (nth [0 1 2] -1)))
          (is (= nil (nth nil nil)))]
         :default

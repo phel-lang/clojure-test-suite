@@ -20,9 +20,14 @@
                              {} {nil nil} [nil]
                              {} {nil nil} [nil nil]))
 
-    (testing "cannot dissoc! transient after persistent! call"
-      (let [t (transient {:a 1}), _ (persistent! t)]
-        (is (p/thrown? (dissoc! t :a)))))
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). dissoc! after persistent! mutates/returns instead of
+    ;; throwing, so skip like :lpy.
+    #?@(:phel []
+        :default
+        [(testing "cannot dissoc! transient after persistent! call"
+           (let [t (transient {:a 1}), _ (persistent! t)]
+             (is (p/thrown? (dissoc! t :a)))))])
 
     (testing "bad shape"
       (are [m keys] (p/thrown? (apply dissoc! m keys))

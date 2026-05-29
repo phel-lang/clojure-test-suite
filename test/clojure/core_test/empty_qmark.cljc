@@ -18,7 +18,11 @@
       (is (= false (empty? "abc")))
       (is (= false (empty? #{0 \space "a"})))
       (is (= false (empty? [(repeat (range))])))
-      #?@(:lpy [(is (= false (empty? \space)))
+      ;; Phel divergence: empty?/last/ffirst/fnext nil-safe + structural.
+      #?@(:phel [(is (= true (empty? 0)))
+                 (is (= false (empty? 0.0)))
+                 (is (= false (empty? \space)))]
+          :lpy [(is (= false (empty? \space)))
                 (is (p/thrown? (empty? 0)))
                 (is (p/thrown? (empty? 0.0)))]
           :cljs [(is (= false (empty? \space)))

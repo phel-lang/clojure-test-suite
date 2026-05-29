@@ -25,13 +25,18 @@
       (is (= nil (fnext #{"abcd"}))))
 
     (testing "exceptions"
-      #?@(:lpy
+      ;; Phel divergence: empty?/last/ffirst/fnext nil-safe + structural; fnext on int throws.
+      #?@(:phel
+          [(is (p/thrown? (fnext 0)))
+           (is (= nil (fnext \a)))]
+
+          :lpy
           [(is (p/thrown? (fnext 0)))
            (is (= nil (fnext \a)))]
 
           :cljs
           [(is (p/thrown? (fnext 0)))]
-          
+
           :default
           [(is (p/thrown? (fnext 0)))
            (is (p/thrown? (fnext \a)))]))))

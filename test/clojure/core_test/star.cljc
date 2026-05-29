@@ -78,7 +78,29 @@
           [(is (p/thrown? (* 1 nil)))
            (is (p/thrown? (* nil 1)))])
 
-      #?@(:lpy
+      #?@(:phel
+          ;; Phel divergence: no automatic bigint promotion / overflow detection (Bucket B, phel-lang #2223).
+          ;; `1N` reads as a plain int, so big-int? (aliased to integer? under :phel) holds.
+          ;; The JVM throws on signed-64 overflow; Phel keeps computing the (mathematically correct)
+          ;; value without an overflow check, so we assert that value instead of a throw.
+          [(is (big-int? (* 0 1N)))
+           (is (big-int? (* 0N 1)))
+           (is (big-int? (* 0N 1N)))
+           (is (big-int? (* 1N 1)))
+           (is (big-int? (* 1 1N)))
+           (is (big-int? (* 1N 1N)))
+           (is (big-int? (* 1 5N)))
+           (is (big-int? (* 1N 5)))
+           (is (big-int? (* 1N 5N)))
+
+           ;; The products promote to Phel's :bigint; the literal would overflow to a
+           ;; float on read, so compare the bigint result by its string representation.
+           (is (= "9223372036854775808" (str (* -1 r/min-int))))
+           (is (= "9223372036854775808" (str (* r/min-int -1))))
+           (is (= "-13835058055282163712" (str (* (long (/ r/min-int 2)) 3))))
+           (is (= "-13835058055282163712" (str (* 3 (long (/ r/min-int 2))))))]
+
+          :lpy
           [(is (big-int? (* 0 1N)))
            (is (big-int? (* 0N 1)))
            (is (big-int? (* 0N 1N)))

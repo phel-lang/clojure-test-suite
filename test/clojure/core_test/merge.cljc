@@ -91,6 +91,8 @@
                       (is (p/thrown? (merge 100 :foo)))
                       (is (p/thrown? (merge "str" :foo)))
                       (is (p/thrown? (merge nil (range))))
-                      #?@(:lpy [(is (= {1 2} (merge {} '(1 2))))]
+                      ;; Phel divergence: merge is lenient, conj-ing a [k v] pair seq into the map.
+                      #?@(:phel [(is (= {1 2} (merge {} '(1 2))))]
+                          :lpy [(is (= {1 2} (merge {} '(1 2))))]
                           :default [(is (p/thrown? (merge {} '(1 2))))])
                       (is (p/thrown? (merge {} 1 2)))]))))

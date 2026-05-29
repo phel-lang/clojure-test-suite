@@ -10,7 +10,12 @@
         (is (= 2 (numerator 2/3)))
         (is (= 3 (numerator 3/4)))])
 
-   #?@(:lpy
+   ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+   ;; Phel treats integers as ratios with denominator 1, so numerator of an int is the int itself.
+   #?@(:phel
+       [(is (= 1 (numerator 1)))
+        (is (= 1 (numerator 1N)))]
+       :lpy
        [(is (= 1 (numerator 1)))
         (is (= 1 (numerator 1N)))]
        :default

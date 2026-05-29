@@ -36,7 +36,14 @@
            true  1/2
            false -1/2]))
 
-    #?@(:cljs
+    ;; Phel divergence: numeric predicate lenient on bad input; nil/false
+    ;; return false, true coerces to 1 (positive) instead of throwing
+    ;; (Bucket A/B, #2223).
+    #?@(:phel
+        [(is (= false (pos? nil)))
+         (is (= false (pos? false)))
+         (is (= true (pos? true)))]
+        :cljs
         [(is (not (pos? nil)))
          (is (not (pos? false))) ; Prints warning
          (is (pos? true))] ; Prints warning

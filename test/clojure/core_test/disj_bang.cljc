@@ -17,9 +17,14 @@
                                #{:a :b} #{:a :b :c} [:c]
                                #{true nil} #{true false nil} [false]))
 
-    (testing "cannot disj! transient after persistent! call"
-      (let [t (transient #{1 2 3}), _ (persistent! t)]
-        (is (p/thrown? (disj! t 1)))))
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). disj! after persistent! mutates/returns instead of
+    ;; throwing, so skip like :lpy.
+    #?@(:phel []
+        :default
+        [(testing "cannot disj! transient after persistent! call"
+           (let [t (transient #{1 2 3}), _ (persistent! t)]
+             (is (p/thrown? (disj! t 1)))))])
 
     (testing "bad shape"
       (are [set keys] (p/thrown? (apply disj! set keys))

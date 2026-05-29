@@ -192,5 +192,8 @@
         'quote :quote-foo-result
         'foo :quote-foo-result)
 
-      (is (p/thrown? (negative-tests ##NaN)))
-      (is (p/thrown? (negative-tests :something-not-found))))))
+      ;; Phel divergence: case with no matching clause and no default returns nil instead of throwing.
+      #?(:phel (is (nil? (negative-tests ##NaN)))
+         :default (is (p/thrown? (negative-tests ##NaN))))
+      #?(:phel (is (nil? (negative-tests :something-not-found)))
+         :default (is (p/thrown? (negative-tests :something-not-found)))))))

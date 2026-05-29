@@ -18,12 +18,24 @@
         -120N true))
 
     (testing "invalid"
-      (are [x] (p/thrown? (even? x))
-        nil
-        ##Inf
-        ##-Inf
-        ##NaN
-        1.5
-        0.2M
-        #?@(:cljs    []
-            :default [1/2])))))
+      ;; Phel divergence: odd?/even? operate on any number (no int-check); only nil throws.
+      #?@(:phel
+          [(are [x] (p/thrown? (even? x))
+             nil)
+           (are [x] (boolean? (even? x))
+             ##Inf
+             ##-Inf
+             ##NaN
+             1.5
+             0.2M
+             1/2)]
+          :default
+          [(are [x] (p/thrown? (even? x))
+             nil
+             ##Inf
+             ##-Inf
+             ##NaN
+             1.5
+             0.2M
+             #?@(:cljs    []
+                 :default [1/2]))]))))

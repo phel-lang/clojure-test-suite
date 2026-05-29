@@ -16,5 +16,7 @@
       (is (= '("b") (vals {"a" "b"})))
       (is (= '([:b :c]) (vals {:a [:b :c]})))
       (is (= '((:c)) (vals {:a (vals {:b :c})})))
-      #?@(:cljs [(is (p/thrown? (vals 0)))]
+      ;; Phel divergence: vals is lenient on a non-associative arg, returning nil.
+      #?@(:phel [(is (nil? (vals 0)))]
+          :cljs [(is (p/thrown? (vals 0)))]
           :default [(is (p/thrown? (vals 0)))]))))

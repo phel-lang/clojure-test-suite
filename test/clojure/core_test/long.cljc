@@ -43,7 +43,14 @@
          (is (p/thrown? (long 9223372036854775808)))])
 
     ;; Check handling of other types
-    #?@(:cljr
+    ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+    #?@(:phel
+        [(is (= 0 (long "0")))
+         (is (p/thrown? (long :0)))
+         (is (p/thrown? (long [0])))
+         (is (= 0 (long nil)))]
+
+        :cljr
         [(is (= 0 (long "0")))
          (is (p/thrown? (long :0)))
          (is (p/thrown? (long [0])))
