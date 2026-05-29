@@ -111,5 +111,8 @@
        ;; CLJS can accept arbitrary arguments
        ;; Throw when wrong number of indices are passed to the function
        ;; CLJS returns 1, and doesn't throw!
+       ;; Phel divergence: update is lenient on extra args, forwarding them to the fn (here identity).
        #?(:cljs nil
-          :default [{:k 1} :k identity 1 2 3 4])))))
+          :phel nil
+          :default [{:k 1} :k identity 1 2 3 4]))
+     #?(:phel (t/is (= {:k 1} (apply update [{:k 1} :k identity 1 2 3 4])))))))

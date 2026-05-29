@@ -15,8 +15,9 @@
                                         (throw (ex-info "expected" {}))
                                         (swap! n inc)))]
           (is (p/thrown? (last (repeatedly 2 #(fails-second-run state)))))
-          (is (= #?(;; phel doesn't seem to handle mid failures gracefully
-                    :phel    0
+          ;; Phel divergence: repeatedly realizes lazily; last forces both calls, so the
+          ;; first side effect runs (state -> 1) before the second call throws.
+          (is (= #?(:phel    1
                     :default 1)
                  @state))))))
 

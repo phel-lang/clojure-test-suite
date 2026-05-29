@@ -81,7 +81,12 @@
     (is (nil? (namespace (keyword nil "hi"))))
     (is (= #?(:jank nil :default "") (namespace (keyword "" "hi"))))
     ;; But if name is nil, then maybe we throw or maybe we don't
-    #?(:jank
+    #?(:phel
+       ;; Phel divergence: keyword is lenient on bad-shape input.
+       ;; (keyword "abc" nil) returns nil instead of throwing.
+       (is (nil? (keyword "abc" nil)))
+
+       :jank
        nil
 
        ; CLJS creates a keyword that isn't
@@ -92,7 +97,16 @@
        :default
        (is (p/thrown? (keyword "abc" nil))))
 
-    #?@(:jank
+    #?@(:phel
+        ;; Phel divergence: keyword is lenient on bad-shape ns/name input.
+        ;; The 2-arg form accepts symbols/keywords and coerces them via str
+        ;; instead of throwing, so it produces concrete keywords.
+        [(is (= :abc/abc (keyword 'abc "abc")))
+         (is (= :abc/abc (keyword "abc" 'abc)))
+         (is (= (keyword ":abc" "abc") (keyword :abc "abc")))   ; ns keyword keeps its colon: ::abc/abc
+         (is (= (keyword "abc" ":abc") (keyword "abc" :abc)))]  ; name keyword keeps its colon: :abc/:abc
+
+        :jank
         []
 
         :cljs

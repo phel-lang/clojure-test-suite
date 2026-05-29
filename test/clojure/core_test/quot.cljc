@@ -96,7 +96,18 @@
       double? 0.0 1 ##Inf
       double? 0.0 1 ##-Inf)
 
-    #?@(:cljs
+    ;; Phel divergence: reducer lenient on bad input; quot on an Inf/-Inf
+    ;; dividend yields (signed) Infinity and a NaN operand yields NaN, instead
+    ;; of throwing. Only the zero divisor still throws (Division by zero)
+    ;; (Bucket A/B, #2223).
+    #?@(:phel
+        [(is (p/thrown? (quot 10 0)))
+         (is (= ##Inf (quot ##Inf 1)))
+         (is (= ##-Inf (quot ##-Inf 1)))
+         (is (NaN? (quot ##NaN 1)))
+         (is (NaN? (quot 1 ##NaN)))
+         (is (NaN? (quot ##NaN 1)))]
+        :cljs
         [(is (NaN? (quot 10 0)))
          (is (NaN? (quot ##Inf 1)))
          (is (NaN? (quot ##-Inf 1)))

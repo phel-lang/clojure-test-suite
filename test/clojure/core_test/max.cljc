@@ -36,7 +36,15 @@
     (is (NaN? (max ##-Inf ##NaN ##Inf)))
     (is (NaN? (max ##NaN)))
 
-    #?@(:lpy
+    ;; Phel divergence: reducer lenient on bad input; max uses lenient `>`
+    ;; comparison, so strings compare structurally and nil sorts below numbers
+    ;; instead of throwing (Bucket A/B, #2223).
+    #?@(:phel
+        [(is (= "y" (max "x" "y")))
+         (is (= 1 (max nil 1)))
+         (is (= 1 (max 1 nil)))]
+
+        :lpy
         [(is (= "y" (max "x" "y")))
          (is (p/thrown? (max nil 1)))
          (is (p/thrown? (max 1 nil)))]
@@ -44,7 +52,7 @@
         :cljs
         [(is (= 1 (max nil 1)))
          (is (= 1 (max 1 nil)))]
-        
+
         :default
         [(is (p/thrown? (max "x" "y")))
          (is (p/thrown? (max nil 1)))

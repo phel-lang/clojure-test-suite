@@ -43,22 +43,31 @@
           (is (= (count someset) (count (transient someset)))))))
 
     (testing "calling non-bang interface throws"
+      ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+      ;; non-bang ops permitted). Phel's non-bang ops return a transient value
+      ;; instead of throwing, so assert non-nil under :phel.
       (testing "for transient vector"
         (let [avec [1 2 3]]
-          (is (p/thrown? (assoc (transient avec) 0 5)))
-          (is (p/thrown? (conj (transient avec) 5)))
+          #?(:phel (is (some? (assoc (transient avec) 0 5)))
+             :default (is (p/thrown? (assoc (transient avec) 0 5))))
+          #?(:phel (is (some? (conj (transient avec) 5)))
+             :default (is (p/thrown? (conj (transient avec) 5))))
           (is (p/thrown? (pop (transient avec))))))
 
       (testing "for transient map"
         (let [amap {:x 1 :y -1}]
-          (is (p/thrown? (assoc (transient amap) :x 5)))
-          (is (p/thrown? (dissoc (transient amap) :x)))
-          (is (p/thrown? (conj (transient amap) [:x 5])))))
+          #?(:phel (is (some? (assoc (transient amap) :x 5)))
+             :default (is (p/thrown? (assoc (transient amap) :x 5))))
+          #?(:phel (is (some? (dissoc (transient amap) :x)))
+             :default (is (p/thrown? (dissoc (transient amap) :x))))
+          #?(:phel (is (some? (conj (transient amap) [:x 5])))
+             :default (is (p/thrown? (conj (transient amap) [:x 5]))))))
 
       (testing "for transient set"
         (let [someset #{42 "life"}]
           (is (p/thrown? (disj (transient someset) 42)))
-          (is (p/thrown? (conj (transient someset) 43))))))
+          #?(:phel (is (some? (conj (transient someset) 43)))
+             :default (is (p/thrown? (conj (transient someset) 43)))))))
 
     (testing "calling transient a second time throws"
       (are [a-transient] (p/thrown? (transient a-transient))
@@ -87,7 +96,11 @@
                #(+ 1 %)
                '(1 2 3)
                ;; Basilisp does not currently implement sorted collections.
+               ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+               ;; non-bang ops permitted). (transient sorted-coll) returns a value instead
+               ;; of throwing, so skip like :lpy.
                #?@(:lpy []
+                   :phel []
                    :default [(sorted-set :i :j :k)
                              (sorted-map :hp 99)])
                #?@(:cljs [] ;; thrown? range error in clojurescript causes Javacript heap OOM

@@ -89,7 +89,13 @@
            (is (p/thrown? (+ nil 1.0)))
            ;; Python VMs integer types are arbitrary precision and have no min or max
            ;; and arithmetic operations between integers cannot overflow or underflow.
-           #?@(:lpy []
+           ;; Phel divergence: no automatic bigint promotion / overflow detection (Bucket B, phel-lang #2223).
+           ;; The JVM throws on signed-64 overflow; Phel promotes to its :bigint type and keeps the
+           ;; (mathematically correct) value, so we assert that value's string instead of a throw.
+           #?@(:phel
+               [(is (= "9223372036854775808" (str (+ r/max-int 1))))
+                (is (= "-9223372036854775809" (str (+ r/min-int -1))))]
+               :lpy []
                :default
                [(is (p/thrown? (+ r/max-int 1)))
                 (is (p/thrown? (+ r/min-int -1)))])

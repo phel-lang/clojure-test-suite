@@ -52,7 +52,11 @@
                       [1] [0 1 1]
                       [1] [0 1 1 2 2]))
 
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). assoc! after persistent! mutates/returns instead of
+    ;; throwing, so skip like :lpy.
     #?@(:lpy []
+        :phel []
         :default
         [(testing "cannot assoc! transient after persistent! call"
            (let [t (transient {:a 1}), _ (persistent! t)]

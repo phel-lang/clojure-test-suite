@@ -90,7 +90,15 @@
 
     ;; Two arg version requires namespace and symbol to be a string, not
     ;; a symbol or keyword like the one arg version.
-    #?@(:cljs
+    #?@(:phel
+        ;; Phel divergence: symbol is lenient on bad-shape ns/name input.
+        ;; The 2-arg form coerces symbol/keyword args via their name instead
+        ;; of throwing, so every case below resolves to 'abc/abc.
+        [(is (= 'abc/abc (symbol 'abc "abc")))
+         (is (= 'abc/abc (symbol "abc" 'abc)))
+         (is (= 'abc/abc (symbol :abc "abc")))
+         (is (= 'abc/abc (symbol "abc" :abc)))]
+        :cljs
         [(is (= 'abc/abc (symbol 'abc "abc")))
          (is (= 'abc/abc (symbol "abc" 'abc)))
          ;; (is (= :abc/abc (symbol :abc "abc"))) results in unreadable value

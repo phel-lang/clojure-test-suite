@@ -34,12 +34,17 @@
            false 1/2
            false -1/2]))
 
-    (is #?@(:lpy [(= false (zero? nil))]
+    ;; Phel divergence: numeric predicate lenient on bad input; returns false
+    ;; instead of throwing (Bucket A/B, #2223).
+    (is #?@(:phel [(= false (zero? nil))]
+            :lpy [(= false (zero? nil))]
             :cljs [(= false (zero? nil))]
             :default [(p/thrown? (zero? nil))]))
-    (is #?@(:lpy [(= false (zero? false))]
+    (is #?@(:phel [(= false (zero? false))]
+            :lpy [(= false (zero? false))]
             :cljs [(= false (zero? false))]
             :default [(p/thrown? (zero? false))]))
-    (is #?@(:lpy [(= false (zero? true))]
+    (is #?@(:phel [(= false (zero? true))]
+            :lpy [(= false (zero? true))]
             :cljs [(= false (zero? true))]
             :default [(p/thrown? (zero? true))]))))

@@ -23,4 +23,7 @@
 
     ;; Negative tests
     (is (p/thrown? (doall (drop nil (range 0 10)))))
-    (is (p/thrown? (into [] (drop nil) (range 0 10))))))
+    ;; Phel divergence: the (drop nil) transducer is nil-safe — nil count puns to 0,
+    ;; so nothing is dropped instead of throwing (the eager (drop nil coll) still throws).
+    #?(:phel (is (= (vec (range 0 10)) (into [] (drop nil) (range 0 10))))
+       :default (is (p/thrown? (into [] (drop nil) (range 0 10)))))))

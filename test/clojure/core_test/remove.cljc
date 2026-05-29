@@ -32,11 +32,14 @@
           0
           nil))
       (testing "non collection passed as second argument throws"
+        ;; Phel divergence: #"" reads as the empty string (a seqable), so remove is lenient there.
         (are [x] (p/thrown? (first (remove nil? x)))
-          #""
+          #?@(:phel [] :default [#""])
           0
           (fn [])
           (atom nil))
         #?(:cljs    (is (= \a (first (remove nil? \a))))
            :lpy     (is (= \a (first (remove nil? \a))))
+           ;; Phel divergence: a char is seqable, so remove returns it instead of throwing.
+           :phel    (is (= \a (first (remove nil? \a))))
            :default (is (p/thrown? (first (remove nil? \a)))))))))

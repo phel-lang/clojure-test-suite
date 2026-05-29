@@ -44,9 +44,11 @@
                              r [:d])))
 
     (testing "bad shape"
+      ;; Phel divergence: dissoc supports sets, so it is lenient there (key absent -> unchanged set).
       (are [m keys] (p/thrown? (apply dissoc m keys))
                     42 [4]
                     '() [0]
                     [] [0]
-                    #{:a :b} [:a]
-                    "string" [\s \t]))))
+                    #?@(:phel [] :default [#{:a :b} [:a]])
+                    "string" [\s \t])
+      #?(:phel (is (= #{:b} (apply dissoc #{:a :b} [:a])))))))

@@ -17,7 +17,11 @@
       (is (= #{:a 1 "a"} (set [:a 1 "a"])))
       (is (= #?(:phel #{1 2} :default #{[:a 1] [:b 2]}) (set {:a 1 :b 2})))
       (is (= #{:a 1 "a" [\space]} (set [:a 1 "a" [\space]])))
-      #?@(:lpy [(is (= #{\space} (set \space)))
+      ;; Phel divergence: a char is a 1-char string (seqable), so set is lenient over it.
+      #?@(:phel [(is (= #{\space} (set \space)))
+                 (is (p/thrown? (set 1)))
+                 (is (p/thrown? (set :a)))]
+          :lpy [(is (= #{\space} (set \space)))
                 (is (p/thrown? (set 1)))
                 (is (p/thrown? (set :a)))]
           :cljs [(is (= #{\space} (set \space)))

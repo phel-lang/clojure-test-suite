@@ -17,5 +17,7 @@
       (is (= '("a") (keys {"a" :b})))
       (is (= '([:a :b]) (keys {[:a :b] :c})))
       (is (= '((:a)) (keys {(keys {:a :b}) :c})))
-      #?@(:cljs [(is (p/thrown? (keys 0)))]
+      ;; Phel divergence: keys is lenient on a non-associative arg, returning nil.
+      #?@(:phel [(is (nil? (keys 0)))]
+          :cljs [(is (p/thrown? (keys 0)))]
           :default [(is (p/thrown? (keys 0)))]))))

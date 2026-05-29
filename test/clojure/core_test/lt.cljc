@@ -90,7 +90,14 @@
       ;; `<` only compares numbers, except in ClojureScript (really
       ;; JavaScript under the hood) where comparisons are just a bit
       ;; of a mess.
-      #?@(:cljr
+      ;; Phel divergence: nil/mixed-type comparison returns a bool; compare on collections returns 0; peek is structural.
+      #?@(:phel
+          [(is (= true (< nil 1)))
+           (is (= false (< 1 nil)))
+           (is (= true (< nil 1 2)))
+           (is (= false (< 1 2 nil)))]
+
+          :cljr
           [(is (p/thrown? (< nil 1)))
            (is (p/thrown? (< 1 nil)))
            (is (p/thrown? (< nil 1 2)))

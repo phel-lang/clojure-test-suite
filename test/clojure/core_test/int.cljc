@@ -37,7 +37,21 @@
            0    1/10
            0    -1/10]))
 
-    #?@(:bb
+    ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+    #?@(:phel
+        [ ;; No 32-bit range clamping/overflow: values pass through.
+         (is (= -2147483648 (int -2147483648.000001)))
+         (is (= -2147483649 (int -2147483649)))
+         (is (= 2147483648 (int 2147483648)))
+         (is (= 2147483647 (int 2147483647.000001)))
+
+         ;; Check handling of other types
+         (is (= 0 (int "0")))
+         (is (p/thrown? (int :0)))
+         (is (p/thrown? (int [0])))
+         (is (= 0 (int nil)))]
+
+        :bb
         []
 
         :cljr

@@ -68,7 +68,11 @@
         -1.0M 1.0M  2.0M)
 
       ;; Zero arg
-      #?(:cljs nil
+      ;; Phel divergence: no automatic bigint promotion / overflow detection (Bucket B, phel-lang #2223).
+      ;; Clojure rejects the zero-arg call as a bad arity; Phel's `-` accepts it and returns the
+      ;; additive identity 0 instead of throwing.
+      #?(:phel (is (= 0 (-)))
+         :cljs nil
          :default (is (p/thrown? (-))))
 
       ;; Single arg
@@ -102,6 +106,21 @@
            (is (= 1 (- 1.0M nil)))
            (is (- r/min-int 1))
            (is (- r/max-int -1))]
+
+          :phel
+          ;; Phel divergence: no automatic bigint promotion / overflow detection (Bucket B, phel-lang #2223).
+          ;; nil operands still throw, but the JVM's signed-64 overflow throw becomes a :bigint
+          ;; promotion in Phel, so we assert the (mathematically correct) value's string.
+          [(is (p/thrown? (- nil 1)))
+           (is (p/thrown? (- 1 nil)))
+           (is (p/thrown? (- nil 1N)))
+           (is (p/thrown? (- 1N nil)))
+           (is (p/thrown? (- nil 1.0)))
+           (is (p/thrown? (- 1.0 nil)))
+           (is (p/thrown? (- nil 1.0M)))
+           (is (p/thrown? (- 1.0M nil)))
+           (is (= "-9223372036854775809" (str (- r/min-int 1))))
+           (is (= "9223372036854775808" (str (- r/max-int -1))))]
 
           :default
           [(is (p/thrown? (- nil 1)))

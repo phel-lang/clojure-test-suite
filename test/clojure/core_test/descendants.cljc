@@ -63,7 +63,11 @@
                             #{#?(:bb 'clojure.core_test.descendants/TestDescendantsRecord :default TestDescendantsRecord)} ::record))
 
       (testing "cannot get descendants by type inheritance"
-        #?@(:lpy
+        ;; Phel divergence: descendants is lenient on a type tag, returns nil instead of throwing.
+        #?@(:phel
+            [(is (nil? (descendants TestDescendantsProtocol)))
+             (is (nil? (descendants Object)))]
+            :lpy
             [(is (nil? (descendants TestDescendantsProtocol)))
              (is (p/thrown? (descendants python/object)))]
             :cljs
@@ -114,7 +118,9 @@
                               nil datatypes ::a))
 
       (testing "cannot get descendants by type inheritance, whether the tag is in h or not"
-        (are [h] #?(:lpy     (p/thrown? (descendants h python/object))
+        ;; Phel divergence: descendants is lenient on a type tag, returns nil instead of throwing.
+        (are [h] #?(:phel    (nil? (descendants h Object))
+                    :lpy     (p/thrown? (descendants h python/object))
                     :cljs    (p/thrown? (descendants h js/Object))
                     :default (p/thrown? (descendants h Object)))
                  ; tag in h

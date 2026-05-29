@@ -18,7 +18,11 @@
     (is (nil? (nthnext nil nil))) ; Surprising
 
     ;; Negative tests
-    #?@(:cljs
+    ;; Phel divergence: nthnext nil-safe — nil index puns to 0 (structural), returns the whole seq.
+    #?@(:phel
+        [(is (= (range 0 10) (nthnext (range 0 10) nil)))
+         (is (= '(0 1 2) (nthnext [0 1 2] nil)))]
+        :cljs
         ;; CLJS does some nil punning to 0
         [(is (= (range 0 10) (nthnext (range 0 10) nil)))
          (is (= '(0 1 2) (nthnext [0 1 2] nil)))]

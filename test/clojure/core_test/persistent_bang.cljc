@@ -23,7 +23,11 @@
                            #{nil} (transient #{nil})
                            #{:a :b :c} (transient #{:a :b :c})))
 
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). A second persistent! returns the value instead of
+    ;; throwing, so skip like :lpy.
     #?@(:lpy []
+        :phel []
         :default
         [(testing "calling persistent! a second time throws"
            (let [coll (transient {}), _ (persistent! coll)]

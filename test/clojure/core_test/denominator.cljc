@@ -8,7 +8,12 @@
     (is (= 3 (denominator 2/3)))
     (is (= 4 (denominator 3/4)))
 
-    #?@(:lpy
+    ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+    ;; Phel treats integers as ratios with denominator 1.
+    #?@(:phel
+        [(is (= 1 (denominator 1)))
+         (is (= 1 (denominator 1N)))]
+        :lpy
         [(is (= 1 (denominator 1)))
          (is (= 1 (denominator 1N)))]
         :default

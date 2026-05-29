@@ -17,10 +17,20 @@
       (is (nil? (peek nil))))
 
     (testing "bad shape"
+      ;; Phel divergence: nil/mixed-type comparison returns a bool; compare on collections returns 0; peek is structural.
+      ;; In Phel, peek is structural: it returns the last char of a string, nil for
+      ;; an empty-ordered map, and the first element of a seq/list. Only sets and
+      ;; plain numbers throw.
       (are [coll] (p/thrown? (peek coll))
                   #{1 2 3}
-                  {:a 1 :b 2}
-                  (cons 1 '())
-                  (range 10)
-                  "str"
-                  42))))
+                  42)
+      #?@(:phel
+          [(is (= nil (peek {:a 1 :b 2})))
+           (is (= 1 (peek (cons 1 '()))))
+           (is (= 0 (peek (range 10))))
+           (is (= "r" (peek "str")))]
+          :default
+          [(is (p/thrown? (peek {:a 1 :b 2})))
+           (is (p/thrown? (peek (cons 1 '()))))
+           (is (p/thrown? (peek (range 10))))
+           (is (p/thrown? (peek "str")))]))))

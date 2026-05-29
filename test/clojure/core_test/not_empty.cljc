@@ -16,14 +16,18 @@
       (is (= [\space] (not-empty [\space])))
       (is (= '(nil) (not-empty '(nil))))
       (is (= "abc" (not-empty "abc")))
-      #?@(:lpy [(is (= "a" (not-empty \a)))
+      ;; Phel divergence: empty?/last/ffirst/fnext nil-safe + structural.
+      #?@(:phel [(is (= "a" (not-empty \a)))
+                 (is (= nil (not-empty 0)))
+                 (is (= 0.0 (not-empty 0.0)))]
+          :lpy [(is (= "a" (not-empty \a)))
                 (is (p/thrown? (not-empty 0)))
                 (is (p/thrown? (not-empty 0.0)))]
 
           :cljs [(is (= "a" (not-empty \a)))
                  (is (p/thrown? (not-empty 0)))
                  (is (p/thrown? (not-empty 0.0)))]
-          
+
           :default [(is (p/thrown? (not-empty \a)))
                     (is (p/thrown? (not-empty 0)))
                     (is (p/thrown? (not-empty 0.0)))]))))

@@ -143,8 +143,12 @@
         true
         false
         #?@(;; Chars aren't seqs except in CLJS and Basilisp where char is string of length 1
+            ;; Phel divergence: a char is a 1-char string (seqable), so map is lenient over it.
+            :phel []
             :cljs []
             :lpy  []
             :default [\a])
         :a
-        'a))))
+        'a)
+      ;; Phel divergence: char is seqable; map over \a yields a 1-element seq.
+      #?(:phel (is (= ["a"] (doall (map identity \a))))))))

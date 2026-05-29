@@ -15,4 +15,7 @@
 
     ;; negative tests
     (is (p/thrown? (doall (take nil (range 0 10)))))
-    (is (p/thrown? (into [] (take nil) (range 0 10))))))
+    ;; Phel divergence: the (take nil) transducer is nil-safe — nil count puns to 0,
+    ;; yielding an empty result instead of throwing (the eager (take nil coll) still throws).
+    #?(:phel (is (= [] (into [] (take nil) (range 0 10))))
+       :default (is (p/thrown? (into [] (take nil) (range 0 10)))))))

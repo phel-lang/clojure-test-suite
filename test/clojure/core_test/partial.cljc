@@ -11,7 +11,10 @@
       (is (= 3 (simple-use))))
     (let [lazily-evaluated (partial inc 1 17)]
       ;; CLJS ignores extra parameters given to apply. E.g., (apply inc 1 17) => 2
-      #?(:cljs (is (= 2 (lazily-evaluated)))
+      ;; Phel divergence: inc ignores extra args too, so (partial inc 1 17) yields 2 (= (inc 1))
+      ;; instead of throwing on arity.
+      #?(:phel (is (= 2 (lazily-evaluated)))
+         :cljs (is (= 2 (lazily-evaluated)))
          :default (is (p/thrown? (lazily-evaluated)))))
     (let [variadic (partial test-fn 1 2 3)]
       (is (= [1 2 3 4]   (variadic 4)))

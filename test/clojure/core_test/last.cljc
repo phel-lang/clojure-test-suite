@@ -17,13 +17,18 @@
       (is (= nil (last nil))))
 
     (testing "exceptions"
-      #?@(:lpy
+      ;; Phel divergence: empty?/last/ffirst/fnext nil-safe + structural.
+      #?@(:phel
+          [(is (= \a (last \a)))
+           (is (= nil (last 0)))]
+
+          :lpy
           [(is (= \a (last \a)))
            (is (p/thrown? (last 0)))]
 
           :cljs
           [(is (p/thrown? (last 0)))]
-          
+
           :default
           [(is (p/thrown? (last \a)))
            (is (p/thrown? (last 0)))]))))

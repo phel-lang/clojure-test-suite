@@ -23,8 +23,10 @@
       2 "ab")
 
     ;; Negative tests
+    ;; Phel divergence: a char literal \a is a 1-char string, so (count \a) returns 1
+    ;; (structural) rather than throwing — exclude it from the throwing cases.
     (are [x] (p/thrown? (count x))
       1
       :a
       'a
-      #?@(:lpy [] :cljs [] :default [\a]))))
+      #?@(:phel [] :lpy [] :cljs [] :default [\a]))))

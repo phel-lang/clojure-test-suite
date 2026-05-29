@@ -91,7 +91,19 @@
          ratio?     -1/3 -3    -4/3
          ratio?     -7/2 -37/2 -15]))
 
-   #?@(:cljs
+   ;; Phel divergence: reducer lenient on bad input; rem on Inf/-Inf/NaN
+   ;; operands yields NaN (PHP fmod semantics) instead of throwing. Only the
+   ;; zero divisor still throws (Division by zero) (Bucket A/B, #2223).
+   #?@(:phel
+       [(is (p/thrown? (rem 10 0)))
+        (is (NaN? (rem ##Inf 1)))
+        (is (NaN? (rem 1 ##Inf)))
+        (is (NaN? (rem ##-Inf 1)))
+        (is (NaN? (rem 1 ##-Inf)))
+        (is (NaN? (rem ##NaN 1)))
+        (is (NaN? (rem 1 ##NaN)))
+        (is (NaN? (rem ##NaN 1)))]
+       :cljs
        [(is (NaN? (rem 10 0)))
         (is (NaN? (rem ##Inf 1)))
         (is (NaN? (rem 1 ##Inf)))

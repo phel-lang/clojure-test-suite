@@ -4,7 +4,12 @@
 
 (when-var-exists NaN?
  (deftest test-NaN?
-   #?@(:cljs
+   ;; Phel divergence: NaN? lenient on nil (returns false via is_nan coercion),
+   ;; but still throws a TypeError on a string arg (Bucket A/B, #2223).
+   #?@(:phel
+       [(is (= false (NaN? nil)))
+        (is (p/thrown? (NaN? "##NaN")))]
+       :cljs
        [(is (not (NaN? nil)))
         (is (NaN? "##NaN"))]            ; Surprising
        :default

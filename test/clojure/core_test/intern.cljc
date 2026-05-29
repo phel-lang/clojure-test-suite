@@ -21,5 +21,13 @@
      (is (= 42 (var-get x-var))))
 
    ;; Trying to intern to an unknown namespace should throw
-   (is (p/thrown? (intern 'unknown-namespace 'x)))
-   (is (p/thrown? (intern 'unknown-namespace 'x 42)))))
+   ;; Phel divergence: intern is lenient on an unknown namespace; instead of
+   ;; throwing it returns the fully qualified symbol (ns/name) for the binding.
+   #?(:phel
+      (do
+        (is (= 'unknown-namespace/x (intern 'unknown-namespace 'x)))
+        (is (= 'unknown-namespace/x (intern 'unknown-namespace 'x 42))))
+      :default
+      (do
+        (is (p/thrown? (intern 'unknown-namespace 'x)))
+        (is (p/thrown? (intern 'unknown-namespace 'x 42)))))))

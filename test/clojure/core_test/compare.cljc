@@ -53,14 +53,20 @@
       ;; zero?  ['()         '()]
       )
 
-    (is (p/thrown? (compare []  '())))
+    ;; Phel divergence: nil/mixed-type comparison returns a bool; compare on collections returns 0; peek is structural.
+    #?(:phel (is (= 0 (compare []  '())))
+       :default (is (p/thrown? (compare []  '()))))
     (is (p/thrown? (compare [1] [[]])))
     (is (p/thrown? (compare []  {})))
     (is (p/thrown? (compare []  #{})))
     (when-var-exists sorted-set
-      (is (p/thrown? (compare #{} (sorted-set)))))
-    (is (p/thrown? (compare #{1} #{1})))
-    (is (p/thrown? (compare {1 2} {1 2})))
-    (is (p/thrown? (compare (range 5) (range 5))))
+      #?(:phel (is (= 1 (compare #{} (sorted-set))))
+         :default (is (p/thrown? (compare #{} (sorted-set))))))
+    #?(:phel (is (= 0 (compare #{1} #{1})))
+       :default (is (p/thrown? (compare #{1} #{1}))))
+    #?(:phel (is (= 0 (compare {1 2} {1 2})))
+       :default (is (p/thrown? (compare {1 2} {1 2}))))
+    #?(:phel (is (= 1 (compare (range 5) (range 5))))
+       :default (is (p/thrown? (compare (range 5) (range 5)))))
     ;; Clojurescript goes into an infinite loop of some sort when compiling this.
     #_(is (p/thrown? (compare (range 5) (range)))))))

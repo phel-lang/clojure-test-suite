@@ -18,7 +18,11 @@
       #?(:lpy nil
          :default (is (= {:a "a"} (select-keys (sorted-map :a "a" :b "b") [:a]))))
       (is (= {:a "a"} (select-keys {:a "a" :b (range)} [:a])))
-      #?@(:cljr [(is (= {} (select-keys "" [:a])))
+      ;; Phel divergence: select-keys is lenient on an empty string source, returning {}.
+      #?@(:phel [(is (= {} (select-keys "" [:a])))
+                 (is (p/thrown? (select-keys 0 [:a])))
+                 (is (p/thrown? (select-keys {} :a)))]
+          :cljr [(is (= {} (select-keys "" [:a])))
                  (is (= {}  (select-keys 0 [:a])))
                  (is (p/thrown? (select-keys {} :a)))]
           :cljs [(is (= {} (select-keys "" [:a])))

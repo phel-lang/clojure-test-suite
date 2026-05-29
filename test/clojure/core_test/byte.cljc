@@ -46,7 +46,21 @@
            1    1.1M
            #?@(:cljr [] :default [-1 -1.1M])]))
 
-    #?@(:bb
+    ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+    #?@(:phel
+        [ ;; byte truncates toward zero, then range-checks the truncated int
+         ;; against 127 ... -128. So near-boundary floats round into range.
+         (is (= -128 (byte -128.000001)))
+         (is (p/thrown? (byte -129)))
+         (is (p/thrown? (byte 128)))
+         (is (= 127 (byte 127.000001)))
+         ;; Check handling of other types
+         (is (p/thrown? (byte "0")))
+         (is (p/thrown? (byte :0)))
+         (is (p/thrown? (byte [0])))
+         (is (p/thrown? (byte nil)))]
+
+        :bb
         [] ;; byte constructions goes via boxed argument
 
         :cljr

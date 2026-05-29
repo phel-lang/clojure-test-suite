@@ -25,7 +25,12 @@
     (testing "negative cases"
       #?(:cljs (is (p/thrown? (shuffle 1)))
          :default (is (p/thrown? (shuffle 1))))
-      #?@(:cljr
+      ;; Phel divergence: shuffle is lenient on bad-shape input (shuffles the seqable, returns a vector).
+      #?@(:phel
+          [(is (= [] (shuffle nil)))
+           (is (= #{"a" "b" "c"} (set (shuffle "abc"))))
+           (is (= [] (shuffle {})))]
+          :cljr
           [(is (p/thrown? (shuffle nil)))
            (is (p/thrown? (shuffle "abc")))
            (is (= [] (shuffle {})))]

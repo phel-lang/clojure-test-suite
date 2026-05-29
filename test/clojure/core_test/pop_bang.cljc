@@ -16,7 +16,11 @@
       (is (p/thrown? (pop! (transient [])))))
 
     ;; Basilisp does not prevent continuing to use transient vectors after persistent! call
+    ;; Phel divergence: transients are unguarded (no use-after-persistent! check;
+    ;; non-bang ops permitted). pop! after persistent! mutates/returns instead of
+    ;; throwing, so skip like :lpy.
     #?@(:lpy []
+        :phel []
         :default
         [(testing "cannot pop! after call to persistent!"
            (let [t (transient [0 1]), _ (persistent! t)]

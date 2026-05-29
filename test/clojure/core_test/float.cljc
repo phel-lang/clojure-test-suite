@@ -30,13 +30,22 @@
           :default [(float 0.0) r/min-double]))
     (is (NaN? (float ##NaN)))
 
-    #?@(:cljr
+    ;; Phel divergence: int/long/float/double throw on non-numeric (phel-lang #2224); no bigint-promote/overflow (Bucket B, #2223).
+    #?@(:phel
+        [ ;; No float range overflow: doubles pass through unchanged.
+         (is (= r/max-double (float r/max-double)))
+         (is (= ##Inf (float ##Inf)))
+         (is (= ##-Inf (float ##-Inf)))
+         (is (= (float 0.0) (float "0")))
+         (is (p/thrown? (float :0)))]
+
+        :cljr
         [(is (p/thrown? (float r/max-double)))
          (is (p/thrown? (float ##Inf)))
          (is (p/thrown? (float ##-Inf)))
          (is (= (float 0.0) (float "0")))
          (is (p/thrown? (float :0)))]
-        
+
         :lpy
         [(is (= r/max-double (float r/max-double)))
          (is (= ##Inf (float ##Inf)))
