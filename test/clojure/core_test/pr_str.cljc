@@ -11,5 +11,8 @@
    ;; with trailing decimal place.
    (is (= #?(:cljs "nil \"a\" \"string\" \"A\" \" \" 1 17 [:a :b] {:c :d} #{:e}"
              :lpy "nil \"a\" \"string\" \"A\" \" \" 1 17.0 [:a :b] {:c :d} #{:e}"
+             ;; Phel has no character type, so \A / \space are single-character
+             ;; strings and print quoted (like CLJS/Basilisp, unlike JVM's \A).
+             :phel "nil \"a\" \"string\" \"A\" \" \" 1 17.0 [:a :b] {:c :d} #{:e}"
              :default "nil \"a\" \"string\" \\A \\space 1 17.0 [:a :b] {:c :d} #{:e}")
           (pr-str nil "a" "string" \A \space 1 17.0 [:a :b] {:c :d} #{:e})))))
