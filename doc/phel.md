@@ -58,7 +58,7 @@ Format the test sources (uses `withFormatDirs` from `phel-config.php`):
 ```json
 {
     "require": {
-        "phel-lang/phel-lang": "^0.38"
+        "phel-lang/phel-lang": "^0.50"
     }
 }
 ```
