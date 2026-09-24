@@ -1,6 +1,6 @@
 {
     "require": {
-        "phel-lang/phel-lang": "^0.52"
+        "phel-lang/phel-lang": "^0.53"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
