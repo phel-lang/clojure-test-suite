@@ -39,7 +39,6 @@
       (testing "non-integer numbers"
         (is (= '(0 0) (repeatedly 1.5 +)))
         (is #?(:cljs true ;; cljs doesn't implement ratios
-               :phel (p/thrown? (repeatedly 1/2 +))
                :default (= '(0) (repeatedly 1/2 +))))
         (is (= '() (repeatedly -1 +)))))
 
