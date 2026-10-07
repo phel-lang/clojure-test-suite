@@ -53,11 +53,12 @@
       ;; zero?  ['()         '()]
       )
 
-    ;; Phel's `compare` treats vectors, lists, sets, maps, and ranges as
-    ;; comparable collections (comparing element-wise / by count) rather than
-    ;; throwing like Clojure does for non-`Comparable` types. Comparing a
-    ;; collection against a different collection *kind* (e.g. vector vs map)
-    ;; still throws. Documented divergence.
+    ;; Phel's `compare` treats vectors, lists and every other sequential seq
+    ;; (ranges, lazy seqs) as comparable, element-wise, rather than throwing
+    ;; like Clojure does for non-`Comparable` types. Two sets or two maps
+    ;; compare 0 when equal and throw otherwise, as in Clojure. A collection
+    ;; against a different kind (e.g. vector vs map) still throws.
+    ;; Documented divergence.
     #?(:phel (do
                (is (zero? (compare []  '())))
                (is (p/thrown? (compare [1] [[]])))
@@ -65,7 +66,10 @@
                (is (p/thrown? (compare []  #{})))
                (is (zero? (compare #{1} #{1})))
                (is (zero? (compare {1 2} {1 2})))
-               (is (pos? (compare (range 5) (range 5)))))
+               (is (p/thrown? (compare #{1} #{2})))
+               (is (p/thrown? (compare {1 2} {1 3})))
+               (is (zero? (compare (range 5) (range 5))))
+               (is (neg? (compare (range 4) (range 5)))))
        :default
        (do
          (is (p/thrown? (compare []  '())))
