@@ -1,6 +1,6 @@
 {
     "require": {
-        "phel-lang/phel-lang": "^0.54"
+        "phel-lang/phel-lang": "^1.0.0-rc3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

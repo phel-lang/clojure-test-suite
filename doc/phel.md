@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- PHP 8.4+ (`php -v` to check)
+- PHP 8.5+ (`php -v` to check)
 - [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-macos)
 
 Install dependencies:
@@ -53,12 +53,12 @@ Format the test sources (uses `withFormatDirs` from `phel-config.php`):
 
 ## Updating the Phel version
 
-`composer.json` currently pins a stable release:
+`composer.json` requires the 1.0 release candidate, which also accepts 1.0.0 stable:
 
 ```json
 {
     "require": {
-        "phel-lang/phel-lang": "^0.54"
+        "phel-lang/phel-lang": "^1.0.0-rc3"
     }
 }
 ```
