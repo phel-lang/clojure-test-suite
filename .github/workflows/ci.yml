@@ -106,9 +106,9 @@ jobs:
           cli: 1.12.0.1530
           lein: 2.11.2
 
-      # Use dev build because it contains a fix not yet in a release
-      - name: Install babashka dev build
-        run: bash <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install) --dev-build --dir /tmp
+      # 1.13.226+ fails (merge {} [:foo "foo"]) with "Don't know how to create ISeq from: Keyword"
+      - name: Install babashka
+        run: bash <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install) --version 1.13.225 --dir /tmp
 
       - name: Cache clojure dependencies
         uses: actions/cache@v5
