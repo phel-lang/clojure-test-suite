@@ -15,7 +15,7 @@
                                         (throw (ex-info "expected" {}))
                                         (swap! n inc)))]
           (is (p/thrown? (last (repeatedly 2 #(fails-second-run state)))))
-          (is (= 1 @state))))))
+          (is (= 1 @state)))))
 
     (testing "Single argument"
       (is (= 0 (first (repeatedly +))))
@@ -63,4 +63,4 @@
           {}
           #{}
           '()
-          []))))
+          [])))))
